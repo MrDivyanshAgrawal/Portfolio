@@ -1,7 +1,7 @@
 import { motion, useAnimation } from 'framer-motion';
 import { techIcons } from '../components/Icons';
 import { useState, useRef, useEffect } from 'react';
-import { SiLeetcode, SiCodechef, SiGeeksforgeeks, SiCodeforces } from 'react-icons/si';
+import { SiLeetcode, SiCodechef, SiGeeksforgeeks, SiCodingninjas } from 'react-icons/si';
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi2';
 
 const Skills = () => {
@@ -117,6 +117,69 @@ const Skills = () => {
     },
   ];
 
+  const cpPlatforms = [
+    {
+      platform: "LeetCode",
+      rating: "1830",
+      problems: "450+",
+      percentile: "Top 6.47%",
+      gradient: "from-yellow-400 to-orange-500",
+      bgGradient: "from-yellow-900/20 to-orange-900/20",
+      icon: <SiLeetcode className="w-12 h-12" />,
+      iconColor: "text-yellow-500",
+      progress: 85,
+      link: "https://leetcode.com/u/divyansh1004"
+    },
+    {
+      platform: "CodeChef",
+      rating: "1500",
+      problems: "115+",
+      percentile: "3★ Coder",
+      gradient: "from-amber-400 to-red-600",
+      bgGradient: "from-amber-900/20 to-red-900/20",
+      icon: <SiCodechef className="w-12 h-12" />,
+      iconColor: "text-amber-600",
+      progress: 70,
+      link: "https://www.codechef.com/users/divyansh_1001"
+    },
+    {
+      platform: "GeeksforGeeks",
+      rating: "1570",
+      problems: "200+",
+      percentile: "Institute Rank 1",
+      gradient: "from-green-400 to-emerald-600",
+      bgGradient: "from-green-900/20 to-emerald-900/20",
+      icon: <SiGeeksforgeeks className="w-12 h-12" />,
+      iconColor: "text-green-600",
+      progress: 75,
+      link: "https://www.geeksforgeeks.org/user/divyansh10363k"
+    },
+    {
+      platform: "Code360",
+      rating: "2158",
+      problems: "300+",
+      percentile: "Expert Level",
+      gradient: "from-purple-400 to-pink-600",
+      bgGradient: "from-purple-900/20 to-pink-900/20",
+      icon: <SiCodingninjas className="w-12 h-12" />,
+      iconColor: "text-purple-500",
+      progress: 90,
+      link: "https://www.naukri.com/code360/profile/divyansh1001ag"
+    }
+  ];
+
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.05,
+        delayChildren: 0.1
+      }
+    }
+  };
+
   const scrollLeft = (categoryIndex) => {
     if (scrollRefs.current[categoryIndex]) {
       const scrollAmount = 320; // Scroll by approximately 2.5 cards
@@ -158,11 +221,21 @@ const Skills = () => {
                        bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 mb-4">
             Technical Skills
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 mx-auto" />
+          <motion.div 
+            initial={{ width: 0 }}
+            animate={isVisible ? { width: "6rem" } : { width: 0 }}
+            transition={{ duration: 0.8 }}
+            className="h-1 bg-gradient-to-r from-cyan-400 to-blue-500 mx-auto"
+          />
         </motion.div>
         
         {/* Skills Categories with Horizontal Layout */}
-        <div className="space-y-16">
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          animate={isVisible ? "visible" : "hidden"}
+          className="space-y-16"
+        >
           {skillCategories.map((category, categoryIndex) => (
             <motion.div
               key={categoryIndex}
@@ -305,9 +378,9 @@ const Skills = () => {
                           <motion.span 
                             animate={{ 
                               rotate: hoveredSkill === `${categoryIndex}-${skillIndex}` ? 360 : 0,
-                              scale: isVisible ? 1 : 0.5
+                              scale: isVisible ? [0.9, 1.1, 1] : 0.5,
+                              transition: { duration: 0.8, times: [0, 0.6, 1] }
                             }}
-                            transition={{ duration: 0.5 }}
                             className="text-4xl relative z-10"
                           >
                             {techIcons[skill.icon]}
@@ -322,7 +395,7 @@ const Skills = () => {
                           {/* Floating particles on hover */}
                           {hoveredSkill === `${categoryIndex}-${skillIndex}` && (
                             <>
-                              {[...Array(3)].map((_, i) => (
+                              {[...Array(5)].map((_, i) => (
                                 <motion.div
                                   key={i}
                                   className="absolute w-1 h-1 bg-cyan-400 rounded-full pointer-events-none"
@@ -332,14 +405,15 @@ const Skills = () => {
                                     opacity: 0 
                                   }}
                                   animate={{ 
-                                    x: [0, (i - 1) * 30],
-                                    y: [0, -40],
+                                    x: [0, (i - 2) * 20 * Math.random()],
+                                    y: [0, -40 * Math.random() - 10],
                                     opacity: [0, 1, 0]
                                   }}
                                   transition={{ 
-                                    duration: 1,
+                                    duration: 1 + Math.random(),
                                     delay: i * 0.1,
-                                    repeat: Infinity
+                                    repeat: Infinity,
+                                    repeatType: "loop"
                                   }}
                                   style={{ zIndex: 30 }}
                                 />
@@ -362,7 +436,7 @@ const Skills = () => {
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
         
         {/* Competitive Programming Section */}
         <motion.div
@@ -372,56 +446,19 @@ const Skills = () => {
           className="mt-20"
         >
           <h3 className="text-2xl md:text-3xl font-bold text-center mb-12 text-white">
-            Competitive Programming Journey
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={isVisible ? 
+                { opacity: 1, transition: { delay: 0.6 } } : 
+                { opacity: 0 }
+              }
+            >
+              Competitive Programming Journey
+            </motion.span>
           </h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              {
-                platform: "LeetCode",
-                rating: "1830",
-                problems: "450+",
-                percentile: "Top 6.47%",
-                gradient: "from-yellow-400 to-orange-500",
-                bgGradient: "from-yellow-900/20 to-orange-900/20",
-                icon: <SiLeetcode className="w-12 h-12" />,
-                iconColor: "text-yellow-500",
-                progress: 85
-              },
-              {
-                platform: "CodeChef",
-                rating: "1500",
-                problems: "115+",
-                percentile: "3★ Coder",
-                gradient: "from-amber-400 to-red-600",
-                bgGradient: "from-amber-900/20 to-red-900/20",
-                icon: <SiCodechef className="w-12 h-12" />,
-                iconColor: "text-amber-600",
-                progress: 70
-              },
-              {
-                platform: "GeeksforGeeks",
-                rating: "1570",
-                problems: "200+",
-                percentile: "Institute Rank 1",
-                gradient: "from-green-400 to-emerald-600",
-                bgGradient: "from-green-900/20 to-emerald-900/20",
-                icon: <SiGeeksforgeeks className="w-12 h-12" />,
-                iconColor: "text-green-600",
-                progress: 75
-              },
-              {
-                platform: "Code360",
-                rating: "2158",
-                problems: "300+",
-                percentile: "Expert Level",
-                gradient: "from-purple-400 to-pink-600",
-                bgGradient: "from-purple-900/20 to-pink-900/20",
-                icon: <SiCodeforces className="w-12 h-12" />,
-                iconColor: "text-purple-500",
-                progress: 90
-              }
-            ].map((platform, index) => (
+            {cpPlatforms.map((platform, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
@@ -429,21 +466,41 @@ const Skills = () => {
                   { opacity: 1, y: 0, transition: { delay: 0.6 + index * 0.1 }} : 
                   { opacity: 0, y: 30 }
                 }
+                whileHover={{ scale: 1.05 }}
               >
-                <motion.div
+                <motion.a
+                  href={platform.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   whileHover={{ y: -10 }}
-                  className="relative group"
+                  whileTap={{ scale: 0.98 }}
+                  className="relative group block cursor-pointer"
+                  aria-label={`View profile on ${platform.platform}`}
                 >
-                  <div className={`absolute inset-0 bg-gradient-to-br ${platform.bgGradient} 
-                                rounded-2xl blur-xl opacity-50 group-hover:opacity-100 
-                                transition-opacity duration-300`} />
+                  {/* Pulsating background effect */}
+                  <motion.div
+                    animate={isVisible ? {
+                      scale: [1, 1.05, 1],
+                      opacity: [0.5, 0.7, 0.5],
+                    } : { scale: 1, opacity: 0.5 }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      repeatType: "reverse",
+                      delay: index * 0.2
+                    }}
+                    className={`absolute inset-0 bg-gradient-to-br ${platform.bgGradient} 
+                              rounded-2xl blur-xl opacity-50 group-hover:opacity-100 
+                              transition-opacity duration-300`} 
+                  />
                   
                   <div className="relative bg-gray-800/60 backdrop-blur-sm rounded-2xl p-6
-                                border border-gray-700/50 hover:border-gray-600
+                                border border-gray-700/50 group-hover:border-gray-600
                                 transition-all duration-300 h-full">
                     <motion.div
                       animate={isVisible ? { 
                         scale: [1, 1.1, 1],
+                        rotate: [0, 5, 0, -5, 0],
                         transition: { 
                           duration: 2,
                           repeat: Infinity,
@@ -463,8 +520,10 @@ const Skills = () => {
                     <div className="text-center mb-4">
                       <motion.p 
                         initial={{ scale: 0.8, opacity: 0 }}
-                        animate={isVisible ? { scale: 1, opacity: 1 } : { scale: 0.8, opacity: 0 }}
-                        transition={{ delay: 0.8 + index * 0.1 }}
+                        animate={isVisible ? 
+                          { scale: 1, opacity: 1, transition: { delay: 0.8 + index * 0.1 } } : 
+                          { scale: 0.8, opacity: 0 }
+                        }
                         className="text-4xl font-bold text-white mb-1"
                       >
                         {platform.rating}
@@ -477,7 +536,11 @@ const Skills = () => {
                         <motion.div
                           initial={{ width: 0 }}
                           animate={isVisible ? { width: `${platform.progress}%` } : { width: 0 }}
-                          transition={{ duration: 1, delay: 1 + index * 0.1 }}
+                          transition={{ 
+                            duration: 1, 
+                            delay: 1 + index * 0.1,
+                            ease: "easeOut"
+                          }}
                           className={`h-full bg-gradient-to-r ${platform.gradient}`}
                         />
                       </div>
@@ -490,17 +553,45 @@ const Skills = () => {
                         {platform.percentile}
                       </span>
                     </div>
+                    
+                    {/* Hover overlay with "View Profile" text */}
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      whileHover={{ opacity: 1 }}
+                      transition={{ duration: 0.2 }}
+                      className="absolute inset-0 bg-gradient-to-br from-gray-900/80 to-gray-800/80 
+                               rounded-2xl flex items-center justify-center backdrop-blur-sm"
+                    >
+                      <span className={`text-transparent bg-clip-text 
+                                    bg-gradient-to-r ${platform.gradient} font-bold text-xl`}>
+                        View Profile
+                      </span>
+                    </motion.div>
                   </div>
-                </motion.div>
+                </motion.a>
               </motion.div>
             ))}
           </div>
         </motion.div>
       </div>
       
-      {/* Background decorations */}
-      <div className="absolute top-20 right-0 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl -z-10" />
-      <div className="absolute bottom-20 left-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl -z-10" />
+      {/* Background decorations with animation */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={isVisible ? 
+          { opacity: 0.5, scale: 1, transition: { duration: 1 } } : 
+          { opacity: 0, scale: 0.8 }
+        }
+        className="absolute top-20 right-0 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl -z-10" 
+      />
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={isVisible ? 
+          { opacity: 0.5, scale: 1, transition: { duration: 1, delay: 0.2 } } : 
+          { opacity: 0, scale: 0.8 }
+        }
+        className="absolute bottom-20 left-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl -z-10" 
+      />
     </section>
   );
 };

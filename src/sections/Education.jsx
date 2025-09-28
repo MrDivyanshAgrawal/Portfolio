@@ -3,9 +3,6 @@ import { motion } from 'framer-motion';
 import { FiBook, FiAward } from 'react-icons/fi';
 import { FaUniversity, FaSchool, FaGraduationCap } from 'react-icons/fa';
 import { HiAcademicCap } from 'react-icons/hi';
-import College from "../assets/Education/college.png"
-import School1 from "../assets/Education/School1.jpeg"
-import School2 from "../assets/Education/School2.png"
 
 const Education = () => {
   const educationData = [
@@ -16,7 +13,7 @@ const Education = () => {
       duration: "Nov 2022 - Present",
       grade: "CGPA: 8.79 (Till 6th Semester)",
       icon: <FaUniversity className="text-cyan-400 text-xl" />,
-      logo: "College", // Add your logo path here
+      logo: "/Education/College", // Add your logo path here
       highlights: ["Strong foundation in Computer Science", "Active participant in coding competitions"],
       coursework: [
         "Data Structures",
@@ -34,7 +31,7 @@ const Education = () => {
       duration: "2019 - 2021",
       grade: "Percentage: 85.2%",
       icon: <HiAcademicCap className="text-blue-400 text-xl" />,
-      logo: "School2", // Add your logo path here
+      logo: "/Education/School2", // Add your logo path here
       highlights: ["PCM with Physical Education", "Consistent academic performance"],
       subjects: ["Physics", "Chemistry", "Mathematics", "Physical Education", "English"]
     },
@@ -45,7 +42,7 @@ const Education = () => {
       duration: "2009 - 2019",
       grade: "Percentage: 91%",
       icon: <FaSchool className="text-green-400 text-xl" />,
-      logo: "School1", // Add your logo path here
+      logo: "/Education/School1", // Add your logo path here
       highlights: ["10 Years of Academic Excellence", "Strong foundation in academics"],
       achievements: ["Bronze Medal - National Science Olympiad", "Bronze Medal - French Olympiad"]
     }
