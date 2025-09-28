@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+/* Fix section positioning relative to navbar */
+section {
+  padding-top: 5rem !important; /* Increased to account for navbar height */
+  scroll-margin-top: 5rem !important; /* This is crucial for proper scroll positioning */
+}
+
+@media (min-width: 768px) {
+  section {
+    padding-top: 4rem !important;
+    scroll-margin-top: 2rem !important;
+  }
+}
+
+/* Adjust section title spacing */
+section [data-aos="fade-up"].text-center {
+  margin-bottom: 2rem !important;
+}
+
+/* Base styles */
+@layer base {
+  body {
+    @apply bg-black overflow-x-hidden;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  html {
+    scroll-behavior: smooth !important;
+    overflow-x: hidden;
+    height: 100%;
+  }
+  
+  #root {
+    @apply overflow-x-hidden;
+    min-height: 100vh;
+    position: relative;
+  }
+}
+
+/* Additional custom styles */
+@layer utilities {
+  .animate-drift {
+    animation: drift 20s infinite;
+  }
+  
+  /* Custom scrollbar styles */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  /* Custom scroll behavior for skill cards */
+  .skill-scroll {
+    scroll-behavior: auto;
+    scroll-snap-type: x mandatory;
+  }
+  
+  .skill-card {
+    scroll-snap-align: start;
+  }
+}
+
+/* Custom Scrollbar Styles - Improved width */
+::-webkit-scrollbar {
+  width: 14px;
+  height: 14px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.8);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, rgb(6, 182, 212, 0.8), rgb(59, 130, 246, 0.8));
+  border-radius: 5px;
+  border: 2px solid rgba(15, 23, 42, 0.8);
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, rgb(6, 182, 212, 1), rgb(59, 130, 246, 1));
+}
+
+/* Firefox */
+html {
+  scrollbar-width: auto;
+  scrollbar-color: #06b6d4 #0f172a;
+}
+
+/* Keyframes */
+@keyframes drift {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(-10px, -10px); }
+  100% { transform: translate(0, 0); }
+}
