@@ -1,4 +1,4 @@
-// App.jsx - Updated with better AOS configuration
+// App.jsx - Modified to prevent duplicate scroll buttons
 import { useEffect, useState } from "react";
 import AnimatedBackground from "./components/AnimatedBackground";
 import Home from "./sections/Home";
@@ -13,6 +13,7 @@ import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { AnimatePresence } from "framer-motion";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -65,30 +66,36 @@ function App() {
     };
   }, []);
 
-  if (loading) {
-    return <Loader />;
-  }
-
   return (
-    <div className="relative">
-      {/* Global animated background */}
-      <AnimatedBackground />
-      
-      {/* Scroll to Top Button */}
-      <ScrollToTop />
-      
-      {/* Content */}
-      <div className="relative z-10">
-        <Home />
-        <About />
-        <Experience />
-        <Skills />
-        <Projects />
-        <Education />
-        <Contact />
-        <Footer />
-      </div>
-    </div>
+    <>
+      {/* Loader with AnimatePresence for proper exit animation */}
+      <AnimatePresence mode="wait">
+        {loading && <Loader />}
+      </AnimatePresence>
+
+      {/* Main content - only render when not loading */}
+      {!loading && (
+        <div className="relative">
+          {/* Global animated background */}
+          <AnimatedBackground />
+          
+          {/* Scroll to Top Button */}
+          <ScrollToTop />
+          
+          {/* Content */}
+          <div className="relative z-10">
+            <Home />
+            <About />
+            <Experience />
+            <Skills />
+            <Projects />
+            <Education />
+            <Contact />
+            <Footer />
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
