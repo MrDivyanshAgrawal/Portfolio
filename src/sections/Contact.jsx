@@ -91,19 +91,19 @@ const Contact = () => {
     {
       name: "LinkedIn",
       icon: <FiLinkedin size={22} />,
-      href: "https://linkedin.com/in/DivyanshAgrawal",
+      href: "https://www.linkedin.com/in/divyansh-agrawal-673420257",
       color: "hover:bg-blue-700"
     },
     {
       name: "Twitter",
       icon: <FaTwitter size={22} />,
-      href: "https://twitter.com/yourusername",
+      href: "https://x.com/Divyans83507403",
       color: "hover:bg-sky-600"
     },
     {
       name: "Instagram",
       icon: <FaInstagram size={22} />,
-      href: "https://instagram.com/yourusername",
+      href: "https://www.instagram.com/divyansh.1004",
       color: "hover:bg-pink-600"
     }
   ];

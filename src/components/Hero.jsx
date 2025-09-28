@@ -85,7 +85,7 @@ const Hero = () => {
     },
     {
       icon: <FaInstagram size={26} />,
-      href: 'https://www.instagram.com/divyansh.1004/',
+      href: 'https://www.instagram.com/divyansh.1004',
       label: 'Instagram',
     },
     {
