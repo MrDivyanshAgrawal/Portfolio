@@ -1,5 +1,6 @@
+// Footer.jsx - Remove scroll-to-top button completely
 import { motion, useAnimation } from 'framer-motion';
-import { FiGithub, FiLinkedin, FiMail, FiHeart, FiMapPin, FiArrowUp, FiInstagram } from 'react-icons/fi';
+import { FiGithub, FiLinkedin, FiMail, FiHeart, FiMapPin, FiPhone } from 'react-icons/fi';
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-scroll';
 
@@ -88,36 +89,18 @@ const Footer = () => {
       color: "bg-gradient-to-br from-orange-500 to-red-600"
     },
     { 
-      href: "https://www.instagram.com/divyansh.1004/", 
-      icon: <FiInstagram size={18} />, 
-      label: "Instagram",
+      href: "tel:+919301956873", 
+      icon: <FiPhone size={18} />, 
+      label: "Phone",
       color: "bg-gradient-to-br from-yellow-500 to-pink-600"
     }
   ];
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
   return (
     <footer ref={footerRef} className="bg-gray-950 py-16 border-t border-gray-800/30 relative overflow-hidden">
       {/* Background gradient decorations */}
       <div className="absolute top-0 left-1/4 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl -z-10" />
       <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl -z-10" />
-
-      {/* Scroll to top button - fixed position at bottom right */}
-      <motion.button
-        onClick={scrollToTop}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-        className="fixed bottom-8 right-8 bg-gradient-to-r from-cyan-500 to-blue-600 p-3 rounded-full text-white shadow-lg hover:shadow-cyan-500/30 transition-all duration-300 z-50"
-        aria-label="Scroll to top"
-      >
-        <FiArrowUp size={20} />
-      </motion.button>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-20">
         <motion.div
@@ -177,7 +160,7 @@ const Footer = () => {
             </motion.div>
           </motion.div>
           
-          {/* Column 2: Quick Links - BACK TO SINGLE COLUMN */}
+          {/* Column 2: Quick Links */}
           <motion.div variants={itemVariants}>
             <motion.h2 
               variants={itemVariants}
@@ -191,7 +174,6 @@ const Footer = () => {
                 className="h-[2px] bg-gradient-to-r from-cyan-400 to-blue-500 absolute bottom-0 left-0"
               />
             </motion.h2>
-            {/* Restored to original single column layout */}
             <motion.div 
               variants={containerVariants}
               className="space-y-3"
