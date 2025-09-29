@@ -151,7 +151,7 @@ const Projects = () => {
     {
       title: "Currency Converter",
       description: "A responsive currency converter application with real-time exchange rates, built with React and Tailwind CSS. Features swap functionality and modern UI.",
-      image: "/currency-converter-preview.png",
+      image: "/currencyconvertor.png",
       github: "https://github.com/MrDivyanshAgrawal/CurrencyConvertor",
       demo: null,
       technologies: [
