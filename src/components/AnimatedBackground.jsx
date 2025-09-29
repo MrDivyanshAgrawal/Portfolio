@@ -82,17 +82,17 @@ const AnimatedBackground = () => {
       />
       
       {/* Floating particles - Optimized */}
-      {[...Array(30)].map((_, i) => (
+      {[...Array(100)].map((_, i) => (
         <motion.div
           key={i}
           className="absolute w-1 h-1 bg-cyan-400/30 rounded-full"
           initial={{
-            x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1000),
-            y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 1000),
+            x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 2000),
+            y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 2000),
           }}
           animate={{
-            x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1000),
-            y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 1000),
+            x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 3000),
+            y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 3000),
           }}
           transition={{
             duration: Math.random() * 20 + 10,
