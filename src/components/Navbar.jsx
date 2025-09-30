@@ -118,7 +118,7 @@ const Navbar = () => {
           <div className="w-8 h-8 sm:w-10 sm:h-10 mr-2 overflow-hidden rounded-full border-2 border-cyan-500/30 group-hover:border-cyan-500 transition-colors duration-300">
             {/* Logo image */}
             <motion.img 
-              src="/Logo.png" 
+              src="/Logo2.jpg" 
               alt="Divyansh Agrawal Logo" 
               className="w-full h-full object-cover"
               whileHover={{ scale: 1.15 }}
