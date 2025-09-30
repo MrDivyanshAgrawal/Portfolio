@@ -1,4 +1,4 @@
-import { motion, useMotionValue } from "framer-motion";
+import { motion, useMotionValue, useInView } from "framer-motion";
 import {
   FaCode,
   FaLaptopCode,
@@ -8,36 +8,30 @@ import {
   FaQuoteLeft,
 } from "react-icons/fa";
 import { SiLeetcode, SiCodechef, SiGithub } from "react-icons/si";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 
 const About = () => {
   const [hoveredCard, setHoveredCard] = useState(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
+  
+  // Separate refs for different sections to control their individual animations
   const sectionRef = useRef(null);
-
-  // Set up intersection observer to refresh animations
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && window.AOS) {
-          // When About section comes into view, refresh AOS animations
-          window.AOS.refresh();
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, []);
+  const titleRef = useRef(null);
+  const infoRef = useRef(null);
+  const quoteRef = useRef(null);
+  const ctaRef = useRef(null);
+  const profileRef = useRef(null);
+  const statsRef = useRef(null);
+  
+  // Check if each section is in view
+  const isSectionInView = useInView(sectionRef, { once: false, margin: "-100px 0px" });
+  const isTitleInView = useInView(titleRef, { once: false, amount: 0.3 });
+  const isInfoInView = useInView(infoRef, { once: false, amount: 0.3 });
+  const isQuoteInView = useInView(quoteRef, { once: false, amount: 0.5 });
+  const isCtaInView = useInView(ctaRef, { once: false, amount: 0.5 });
+  const isProfileInView = useInView(profileRef, { once: false, amount: 0.5 });
+  const isStatsInView = useInView(statsRef, { once: false, amount: 0.2 });
 
   const stats = [
     {
@@ -97,9 +91,11 @@ const About = () => {
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-32">
         {/* Section Title */}
-        <div
-          data-aos="fade-up"
-          data-aos-once="false"
+        <motion.div
+          ref={titleRef}
+          initial={{ opacity: 0, y: 20 }}
+          animate={isTitleInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.7 }}
           className="text-center mb-12"
         >
           <h2
@@ -109,22 +105,17 @@ const About = () => {
             About Me
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 mx-auto" />
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
           {/* Left Content */}
-          <div
-            data-aos="fade-right"
-            data-aos-delay="100"
-            data-aos-once="false"
-            className="space-y-6"
-          >
+          <div className="space-y-6">
             {/* Profile Image for Mobile */}
             <div className="lg:hidden mb-8">
-              <div
-                data-aos="zoom-in"
-                data-aos-delay="300"
-                data-aos-once="false"
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={isSectionInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.7, delay: 0.3 }}
                 className="relative w-48 h-48 mx-auto"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full blur-xl opacity-50" />
@@ -133,13 +124,13 @@ const About = () => {
                   alt="Divyansh Agrawal"
                   className="relative w-full h-full rounded-full object-cover border-4 border-gray-800"
                 />
-              </div>
+              </motion.div>
             </div>
 
-            <h3 
-              data-aos="fade-up"
-              data-aos-delay="200" 
-              data-aos-once="false"
+            <motion.h3 
+              initial={{ opacity: 0, y: 20 }}
+              animate={isSectionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
               className="text-2xl md:text-3xl font-bold text-white"
             >
               Full Stack Developer &
@@ -150,13 +141,13 @@ const About = () => {
                 {" "}
                 Problem Solver
               </span>
-            </h3>
+            </motion.h3>
 
-            <div className="space-y-4 text-gray-300 leading-relaxed">
-              <p
-                data-aos="fade-up"
-                data-aos-delay="300"
-                data-aos-once="false"
+            <div ref={infoRef} className="space-y-4 text-gray-300 leading-relaxed">
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInfoInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.7, delay: 0.1 }}
               >
                 I'm a Computer Science student at{" "}
                 <span className="text-cyan-400 font-medium">
@@ -164,24 +155,24 @@ const About = () => {
                 </span>
                 , passionate about creating innovative web solutions and solving
                 complex problems through code.
-              </p>
+              </motion.p>
 
-              <p
-                data-aos="fade-up"
-                data-aos-delay="400"
-                data-aos-once="false"
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInfoInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.7, delay: 0.2 }}
               >
                 With expertise in the{" "}
                 <span className="text-cyan-400 font-medium">MERN stack</span>{" "}
                 and a strong foundation in data structures and algorithms, I
                 strive to build applications that are both technically robust
                 and user-friendly.
-              </p>
+              </motion.p>
 
-              <p
-                data-aos="fade-up"
-                data-aos-delay="500"
-                data-aos-once="false"
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInfoInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.7, delay: 0.3 }}
               >
                 My passion for competitive programming has helped me develop
                 strong problem-solving skills, placing me in the{" "}
@@ -189,88 +180,87 @@ const About = () => {
                   top 6.47% globally on LeetCode
                 </span>
                 .
-              </p>
+              </motion.p>
 
-              <p
-                data-aos="fade-up"
-                data-aos-delay="600"
-                data-aos-once="false"
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInfoInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.7, delay: 0.4 }}
               >
                 When I'm not coding, I'm exploring new technologies,
                 contributing to open source projects, and looking for ways to
                 enhance my technical expertise to deliver better solutions.
-              </p>
+              </motion.p>
             </div>
 
             {/* Quote or Personal Touch */}
-            <div
-              data-aos="fade-up"
-              data-aos-delay="700"
-              data-aos-once="false"
-              className="relative mt-8 p-6 bg-gray-800/30 backdrop-blur-sm rounded-lg 
-                     border border-gray-700/50"
-            >
-              <FaQuoteLeft className="absolute top-4 left-4 text-cyan-400/20 text-3xl" />
-              <p className="text-gray-300 italic pl-8">
-                "I believe in writing clean, efficient code that not only solves
-                problems but creates delightful user experiences."
-              </p>
+            <div ref={quoteRef}>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={isQuoteInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.7 }}
+                className="relative mt-8 p-6 bg-gray-800/30 backdrop-blur-sm rounded-lg 
+                       border border-gray-700/50"
+              >
+                <FaQuoteLeft className="absolute top-4 left-4 text-cyan-400/20 text-3xl" />
+                <p className="text-gray-300 italic pl-8">
+                  "I believe in writing clean, efficient code that not only solves
+                  problems but creates delightful user experiences."
+                </p>
+              </motion.div>
             </div>
 
             {/* CTA Buttons */}
-            <div
-              data-aos="fade-up"
-              data-aos-delay="800"
-              data-aos-once="false"
-              className="flex flex-wrap gap-4 pt-4"
-            >
-              <motion.a
-                href="/resume.pdf"
-                download
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center gap-2 px-6 py-3 
-                       bg-gradient-to-r from-cyan-500 to-blue-600 
-                       text-white rounded-lg font-medium shadow-lg 
-                       hover:shadow-cyan-500/25 transition-all duration-300"
+            <div ref={ctaRef}>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={isCtaInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.7 }}
+                className="flex flex-wrap gap-4 pt-4"
               >
-                <FaDownload size={18} /> Download Resume
-              </motion.a>
+                <motion.a
+                  href="/resume.pdf"
+                  download
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="inline-flex items-center gap-2 px-6 py-3 
+                         bg-gradient-to-r from-cyan-500 to-blue-600 
+                         text-white rounded-lg font-medium shadow-lg 
+                         hover:shadow-cyan-500/25 transition-all duration-300"
+                >
+                  <FaDownload size={18} /> Download Resume
+                </motion.a>
 
-              <div className="flex gap-3">
-                {platformLinks.map((platform, index) => (
-                  <motion.a
-                    key={index}
-                    href={platform.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ scale: 1.2, rotate: 360 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="p-3 bg-gray-800/50 backdrop-blur-sm rounded-lg
-                           text-gray-400 hover:text-cyan-400 transition-all duration-300
-                           border border-gray-700 hover:border-cyan-400/50"
-                    aria-label={platform.label}
-                  >
-                    {platform.icon}
-                  </motion.a>
-                ))}
-              </div>
+                <div className="flex gap-3">
+                  {platformLinks.map((platform, index) => (
+                    <motion.a
+                      key={index}
+                      href={platform.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ scale: 1.2, rotate: 360 }}
+                      whileTap={{ scale: 0.9 }}
+                      className="p-3 bg-gray-800/50 backdrop-blur-sm rounded-lg
+                             text-gray-400 hover:text-cyan-400 transition-all duration-300
+                             border border-gray-700 hover:border-cyan-400/50"
+                      aria-label={platform.label}
+                    >
+                      {platform.icon}
+                    </motion.a>
+                  ))}
+                </div>
+              </motion.div>
             </div>
           </div>
 
           {/* Right Side - Stats & Profile */}
-          <div
-            data-aos="fade-left"
-            data-aos-delay="200"
-            data-aos-once="false"
-            className="space-y-6"
-          >
-            {/* Profile Image for Desktop - Updated with correct path */}
-            <div className="hidden lg:block mb-8">
-              <div
-                data-aos="zoom-in"
-                data-aos-delay="300"
-                data-aos-once="false"
+          <div className="space-y-6">
+            {/* Profile Image for Desktop */}
+            <div ref={profileRef} className="hidden lg:block mb-8">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={isProfileInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.7 }}
                 className="relative w-64 h-64 mx-auto"
               >
                 <motion.div
@@ -287,17 +277,17 @@ const About = () => {
                   alt="Divyansh Agrawal"
                   className="relative w-full h-full rounded-full object-cover border-4 border-gray-800"
                 />
-              </div>
+              </motion.div>
             </div>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div ref={statsRef} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {stats.map((stat, index) => (
-                <div
+                <motion.div
                   key={index}
-                  data-aos="zoom-in"
-                  data-aos-delay={300 + index * 100}
-                  data-aos-once="false"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={isStatsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="relative group h-full"
                 >
                   <motion.div
@@ -312,9 +302,9 @@ const About = () => {
                   >
                     <div
                       className={`relative bg-gray-800/50 backdrop-blur-sm rounded-xl p-6
-                      border border-gray-700 hover:border-cyan-400/50
-                      transition-all duration-300 overflow-hidden
-                      h-full min-h-[200px] flex flex-col`}
+                        border border-gray-700 hover:border-cyan-400/50
+                        transition-all duration-300 overflow-hidden
+                        h-full min-h-[200px] flex flex-col`}
                     >
                       {/* Gradient overlay on hover */}
                       <motion.div
@@ -330,7 +320,6 @@ const About = () => {
                       <div
                         className={`text-transparent bg-clip-text bg-gradient-to-r ${stat.color} mb-3`}
                       >
-                        {/* Increase the size of the stat icons */}
                         <div className="w-10 h-10">
                           {stat.icon}
                         </div>
@@ -345,7 +334,7 @@ const About = () => {
 
                       <p
                         className={`text-lg font-semibold text-transparent bg-clip-text 
-                      bg-gradient-to-r ${stat.color} mb-2`}
+                        bg-gradient-to-r ${stat.color} mb-2`}
                       >
                         {stat.label}
                       </p>
@@ -355,7 +344,7 @@ const About = () => {
                       </p>
                     </div>
                   </motion.div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>

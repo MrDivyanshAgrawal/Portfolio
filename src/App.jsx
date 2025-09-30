@@ -38,8 +38,8 @@ const App = () => {
         <About />
         <Skills />
         <Experience />
-        <Education />
         <Projects />
+        <Education />
         <Contact />
       </main>
       <Footer />

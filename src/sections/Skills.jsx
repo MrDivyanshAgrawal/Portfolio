@@ -1,63 +1,49 @@
-import { motion, useAnimation } from 'framer-motion';
-import { techIcons } from '../components/Icons';
 import { useState, useRef, useEffect } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { techIcons } from '../components/Icons';
 import { SiLeetcode, SiCodechef, SiGeeksforgeeks, SiCodingninjas } from 'react-icons/si';
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi2';
 
 const Skills = () => {
   const [hoveredSkill, setHoveredSkill] = useState(null);
+  
+  // All useRefs must be called unconditionally
   const scrollRefs = useRef([]);
   const sectionRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
-  const controls = useAnimation();
-
+  const titleRef = useRef(null);
+  const competitiveRef = useRef(null);
+  
+  // Create one ref for each category - unconditionally
+  const category1Ref = useRef(null);
+  const category2Ref = useRef(null);
+  const category3Ref = useRef(null);
+  const category4Ref = useRef(null);
+  
+  // Group them in an array after definition
+  const categoryRefs = [category1Ref, category2Ref, category3Ref, category4Ref];
+  
+  // Check visibility for different sections - all useInView calls must be unconditional
+  const isSectionInView = useInView(sectionRef, { amount: 0.1 });
+  const isTitleInView = useInView(titleRef, { amount: 0.7 });
+  const isCompetitiveInView = useInView(competitiveRef, { amount: 0.3 });
+  const isCategory1InView = useInView(category1Ref, { amount: 0.2 });
+  const isCategory2InView = useInView(category2Ref, { amount: 0.2 });
+  const isCategory3InView = useInView(category3Ref, { amount: 0.2 });
+  const isCategory4InView = useInView(category4Ref, { amount: 0.2 });
+  
+  // Store category visibility in an array for easier access
+  const categoryVisibility = [
+    isCategory1InView, 
+    isCategory2InView, 
+    isCategory3InView, 
+    isCategory4InView
+  ];
+  
+  // Initialize scroll refs
   useEffect(() => {
-    // Setup visibility observer for animations
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        // Update state when visibility changes
-        setIsVisible(entry.isIntersecting);
-        
-        // Trigger animations when section becomes visible
-        if (entry.isIntersecting) {
-          controls.start({
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.5 }
-          });
-          
-          // Reset AOS animations when this section comes into view
-          if (window.AOS) {
-            setTimeout(() => {
-              window.AOS.refreshHard(); // Force a full refresh of all animations
-            }, 100);
-          }
-        } else {
-          // Reset animations when section is out of view
-          controls.start({
-            opacity: 0.5,
-            y: 20
-          });
-        }
-      },
-      {
-        root: null,
-        threshold: 0.1, // Trigger when 10% of the element is visible
-        rootMargin: "-10% 0px" // Trigger slightly before element comes into view
-      }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, [controls]);
-
+    scrollRefs.current = scrollRefs.current.slice(0, 4);
+  }, []);
+  
   const skillCategories = [
     {
       title: "Frontend Development",
@@ -168,16 +154,37 @@ const Skills = () => {
     }
   ];
 
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.05,
-        delayChildren: 0.1
+  // Animated counter for rating numbers
+  const AnimatedCounter = ({ value, isVisible, delay = 0 }) => {
+    const [displayValue, setDisplayValue] = useState(0);
+    
+    useEffect(() => {
+      if (isVisible) {
+        let start = 0;
+        const target = parseInt(value);
+        const duration = 1500; // ms
+        const increment = Math.ceil(target / (duration / 16)); // update every ~16ms for 60fps
+        
+        // Wait for the delay before starting animation
+        const timer = setTimeout(() => {
+          const counter = setInterval(() => {
+            start += increment;
+            if (start >= target) {
+              clearInterval(counter);
+              setDisplayValue(target);
+            } else {
+              setDisplayValue(start);
+            }
+          }, 16);
+          
+          return () => clearInterval(counter);
+        }, delay * 1000);
+        
+        return () => clearTimeout(timer);
       }
-    }
+    }, [isVisible, value, delay]);
+    
+    return <span>{displayValue}</span>;
   };
 
   const scrollLeft = (categoryIndex) => {
@@ -212,57 +219,55 @@ const Skills = () => {
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-32">
         {/* Section Title */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={controls}
-          className="text-center mb-12"
-        >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-transparent 
-                       bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 mb-4">
+        <div ref={titleRef} className="text-center mb-12">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            animate={isTitleInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.7 }}
+            className="text-3xl md:text-4xl lg:text-5xl font-bold text-transparent 
+                     bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 mb-4"
+          >
             Technical Skills
-          </h2>
+          </motion.h2>
           <motion.div 
             initial={{ width: 0 }}
-            animate={isVisible ? { width: "6rem" } : { width: 0 }}
+            animate={isTitleInView ? { width: "6rem" } : { width: 0 }}
             transition={{ duration: 0.8 }}
             className="h-1 bg-gradient-to-r from-cyan-400 to-blue-500 mx-auto"
           />
-        </motion.div>
+        </div>
         
         {/* Skills Categories with Horizontal Layout */}
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          animate={isVisible ? "visible" : "hidden"}
-          className="space-y-16"
-        >
+        <div className="space-y-16">
           {skillCategories.map((category, categoryIndex) => (
-            <motion.div
+            <div
               key={categoryIndex}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isVisible ? 
-                { opacity: 1, y: 0, transition: { delay: categoryIndex * 0.1 }} : 
-                { opacity: 0, y: 30 }
-              }
+              ref={categoryRefs[categoryIndex]}
             >
               {/* Category Title with margin bottom */}
-              <h3 className={`text-xl md:text-2xl font-bold mb-8 text-transparent 
-                           bg-clip-text bg-gradient-to-r ${category.color}`}>
+              <motion.h3
+                initial={{ opacity: 0, y: 20 }}
+                animate={categoryVisibility[categoryIndex] ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.5 }}
+                className={`text-xl md:text-2xl font-bold mb-8 text-transparent 
+                         bg-clip-text bg-gradient-to-r ${category.color}`}
+              >
                 {category.title}
-              </h3>
+              </motion.h3>
               
               {/* Skills Row Container with proper overflow */}
               <div className="relative group">
-                {/* Left Arrow */}
+                {/* Left Arrow - Standardized position */}
                 <motion.button
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={categoryVisibility[categoryIndex] ? { opacity: 0, x: 0 } : { opacity: 0, x: -20 }}
+                  whileHover={{ opacity: 1 }}
                   onClick={() => scrollLeft(categoryIndex)}
-                  className="absolute -left-5 top-1/2 -translate-y-1/2 z-20
+                  className="absolute -left-6 md:-left-8 top-1/2 -translate-y-1/2 z-20
                            w-12 h-12 rounded-full flex items-center justify-center
-                           transition-all duration-300 opacity-0 group-hover:opacity-100"
-                  whileHover={{ scale: 1.1 }}
+                           transition-all duration-300 group-hover:opacity-100"
                   whileTap={{ scale: 0.95 }}
                   aria-label="Scroll left"
-                  animate={isVisible ? { x: 0 } : { x: -20 }}
                 >
                   <div className={`absolute inset-0 bg-gradient-to-r ${category.color} 
                                 rounded-full blur-md opacity-60`} />
@@ -287,16 +292,17 @@ const Skills = () => {
                   </motion.div>
                 </motion.button>
 
-                {/* Right Arrow */}
+                {/* Right Arrow - Standardized position */}
                 <motion.button
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={categoryVisibility[categoryIndex] ? { opacity: 0, x: 0 } : { opacity: 0, x: 20 }}
+                  whileHover={{ opacity: 1 }}
                   onClick={() => scrollRight(categoryIndex)}
-                  className="absolute -right-5 top-1/2 -translate-y-1/2 z-20
+                  className="absolute -right-6 md:-right-8 top-1/2 -translate-y-1/2 z-20
                            w-12 h-12 rounded-full flex items-center justify-center
-                           transition-all duration-300 opacity-0 group-hover:opacity-100"
-                  whileHover={{ scale: 1.1 }}
+                           transition-all duration-300 group-hover:opacity-100"
                   whileTap={{ scale: 0.95 }}
                   aria-label="Scroll right"
-                  animate={isVisible ? { x: 0 } : { x: 20 }}
                 >
                   <div className={`absolute inset-0 bg-gradient-to-r ${category.color} 
                                 rounded-full blur-md opacity-60`} />
@@ -321,7 +327,7 @@ const Skills = () => {
                   </motion.div>
                 </motion.button>
 
-                {/* Scroll Container */}
+                {/* Scroll Container - Standardized padding */}
                 <div 
                   ref={el => scrollRefs.current[categoryIndex] = el}
                   className="overflow-x-auto overflow-y-visible scrollbar-hide 
@@ -332,17 +338,17 @@ const Skills = () => {
                     WebkitOverflowScrolling: 'touch'
                   }}
                 >
-                  <div className="flex gap-4 pb-6 pt-6 px-8 md:px-12">
+                  <div className="flex gap-4 pb-6 pt-6 pl-4 pr-4 md:pl-8 md:pr-8">
                     {category.skills.map((skill, skillIndex) => (
                       <motion.div
                         key={skillIndex}
                         initial={{ opacity: 0, scale: 0.5 }}
-                        animate={isVisible ? 
+                        animate={categoryVisibility[categoryIndex] ? 
                           { 
                             opacity: 1, 
                             scale: 1, 
                             transition: { 
-                              delay: skillIndex * 0.05 + categoryIndex * 0.1,
+                              delay: skillIndex * 0.05,
                               type: "spring",
                               stiffness: 200 
                             } 
@@ -378,8 +384,7 @@ const Skills = () => {
                           <motion.span 
                             animate={{ 
                               rotate: hoveredSkill === `${categoryIndex}-${skillIndex}` ? 360 : 0,
-                              scale: isVisible ? [0.9, 1.1, 1] : 0.5,
-                              transition: { duration: 0.8, times: [0, 0.6, 1] }
+                              transition: { duration: 0.8 }
                             }}
                             className="text-4xl relative z-10"
                           >
@@ -426,7 +431,7 @@ const Skills = () => {
                   </div>
                 </div>
 
-                {/* Gradient fade edges */}
+                {/* Gradient fade edges - Standardized width */}
                 <div className="absolute left-0 top-0 bottom-0 w-16 
                               bg-gradient-to-r from-gray-950 to-transparent 
                               pointer-events-none z-10" />
@@ -434,36 +439,28 @@ const Skills = () => {
                               bg-gradient-to-l from-gray-950 to-transparent 
                               pointer-events-none z-10" />
               </div>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
         
         {/* Competitive Programming Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
-          className="mt-20"
-        >
-          <h3 className="text-2xl md:text-3xl font-bold text-center mb-12 text-white">
-            <motion.span
-              initial={{ opacity: 0 }}
-              animate={isVisible ? 
-                { opacity: 1, transition: { delay: 0.6 } } : 
-                { opacity: 0 }
-              }
-            >
-              Competitive Programming Journey
-            </motion.span>
-          </h3>
+        <div ref={competitiveRef} className="mt-20">
+          <motion.h3
+            initial={{ opacity: 0, y: 30 }}
+            animate={isCompetitiveInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.7 }}
+            className="text-2xl md:text-3xl font-bold text-center mb-12 text-white"
+          >
+            Competitive Programming Journey
+          </motion.h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {cpPlatforms.map((platform, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
-                animate={isVisible ? 
-                  { opacity: 1, y: 0, transition: { delay: 0.6 + index * 0.1 }} : 
+                animate={isCompetitiveInView ? 
+                  { opacity: 1, y: 0, transition: { duration: 0.5, delay: index * 0.1 } } : 
                   { opacity: 0, y: 30 }
                 }
                 whileHover={{ scale: 1.05 }}
@@ -479,7 +476,7 @@ const Skills = () => {
                 >
                   {/* Pulsating background effect */}
                   <motion.div
-                    animate={isVisible ? {
+                    animate={isCompetitiveInView ? {
                       scale: [1, 1.05, 1],
                       opacity: [0.5, 0.7, 0.5],
                     } : { scale: 1, opacity: 0.5 }}
@@ -497,62 +494,91 @@ const Skills = () => {
                   <div className="relative bg-gray-800/60 backdrop-blur-sm rounded-2xl p-6
                                 border border-gray-700/50 group-hover:border-gray-600
                                 transition-all duration-300 h-full">
+                    {/* Animated icon with improved animation */}
                     <motion.div
-                      animate={isVisible ? { 
-                        scale: [1, 1.1, 1],
-                        rotate: [0, 5, 0, -5, 0],
-                        transition: { 
-                          duration: 2,
-                          repeat: Infinity,
-                          repeatDelay: 3
+                      initial={{ scale: 0, rotate: -30 }}
+                      animate={isCompetitiveInView ? {
+                        scale: [0, 1.2, 1],
+                        rotate: [-30, 5, 0],
+                        transition: {
+                          duration: 0.7,
+                          delay: index * 0.15,
+                          ease: "easeOut"
                         }
-                      } : { scale: 1 }}
+                      } : { scale: 0, rotate: -30 }}
                       className={`${platform.iconColor} mb-4 flex justify-center`}
                     >
                       {platform.icon}
                     </motion.div>
                     
-                    <h4 className={`text-xl font-bold mb-6 text-center text-transparent 
-                                 bg-clip-text bg-gradient-to-r ${platform.gradient}`}>
+                    <motion.h4 
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={isCompetitiveInView ? { 
+                        opacity: 1, 
+                        y: 0,
+                        transition: { delay: index * 0.15 + 0.2 } 
+                      } : { opacity: 0, y: 10 }}
+                      className={`text-xl font-bold mb-6 text-center text-transparent 
+                               bg-clip-text bg-gradient-to-r ${platform.gradient}`}
+                    >
                       {platform.platform}
-                    </h4>
+                    </motion.h4>
                     
                     <div className="text-center mb-4">
+                      {/* Animated counter with staggered reveal */}
                       <motion.p 
-                        initial={{ scale: 0.8, opacity: 0 }}
-                        animate={isVisible ? 
-                          { scale: 1, opacity: 1, transition: { delay: 0.8 + index * 0.1 } } : 
-                          { scale: 0.8, opacity: 0 }
+                        initial={{ opacity: 0 }}
+                        animate={isCompetitiveInView ? 
+                          { opacity: 1, transition: { delay: index * 0.15 + 0.3 } } : 
+                          { opacity: 0 }
                         }
                         className="text-4xl font-bold text-white mb-1"
                       >
-                        {platform.rating}
+                        <AnimatedCounter 
+                          value={platform.rating} 
+                          isVisible={isCompetitiveInView}
+                          delay={index * 0.15 + 0.3}
+                        />
                       </motion.p>
-                      <p className="text-sm text-gray-400 uppercase tracking-wider">Rating</p>
+                      <motion.p 
+                        initial={{ opacity: 0, y: 5 }}
+                        animate={isCompetitiveInView ? 
+                          { opacity: 1, y: 0, transition: { delay: index * 0.15 + 0.4 } } : 
+                          { opacity: 0, y: 5 }
+                        }
+                        className="text-sm text-gray-400 uppercase tracking-wider"
+                      >
+                        Rating
+                      </motion.p>
                     </div>
                     
                     <div className="mb-4">
                       <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
                         <motion.div
                           initial={{ width: 0 }}
-                          animate={isVisible ? { width: `${platform.progress}%` } : { width: 0 }}
-                          transition={{ 
-                            duration: 1, 
-                            delay: 1 + index * 0.1,
-                            ease: "easeOut"
-                          }}
+                          animate={isCompetitiveInView ? 
+                            { width: `${platform.progress}%`, transition: { duration: 1.2, delay: index * 0.15 + 0.5 } } : 
+                            { width: 0 }
+                          }
                           className={`h-full bg-gradient-to-r ${platform.gradient}`}
                         />
                       </div>
                     </div>
                     
-                    <div className="flex justify-between items-center text-sm">
+                    <motion.div 
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={isCompetitiveInView ? 
+                        { opacity: 1, y: 0, transition: { delay: index * 0.15 + 0.6 } } : 
+                        { opacity: 0, y: 10 }
+                      }
+                      className="flex justify-between items-center text-sm"
+                    >
                       <span className="text-gray-300">{platform.problems}</span>
                       <span className={`font-medium text-transparent bg-clip-text 
                                      bg-gradient-to-r ${platform.gradient}`}>
                         {platform.percentile}
                       </span>
-                    </div>
+                    </motion.div>
                     
                     {/* Hover overlay with "View Profile" text */}
                     <motion.div
@@ -572,13 +598,13 @@ const Skills = () => {
               </motion.div>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
       
       {/* Background decorations with animation */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
-        animate={isVisible ? 
+        animate={isSectionInView ? 
           { opacity: 0.5, scale: 1, transition: { duration: 1 } } : 
           { opacity: 0, scale: 0.8 }
         }
@@ -586,7 +612,7 @@ const Skills = () => {
       />
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
-        animate={isVisible ? 
+        animate={isSectionInView ? 
           { opacity: 0.5, scale: 1, transition: { duration: 1, delay: 0.2 } } : 
           { opacity: 0, scale: 0.8 }
         }

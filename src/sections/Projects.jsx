@@ -1,69 +1,20 @@
 // src/sections/Projects.jsx
-import { motion, useAnimation } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import ProjectCard from '../components/ProjectCard';
 import { FiGithub } from 'react-icons/fi';
-import { useRef, useEffect, useState } from 'react';
+import { useRef } from 'react';
 
 const Projects = () => {
   const sectionRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
-  const controls = useAnimation();
+  const titleRef = useRef(null);
+  const gridRef = useRef(null);
+  const buttonRef = useRef(null);
   
-  // Track animation cycles
-  const [animationCount, setAnimationCount] = useState(0);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        // Update visibility state
-        setIsVisible(entry.isIntersecting);
-        
-        if (entry.isIntersecting) {
-          // Increase animation counter to force re-animation
-          setAnimationCount(prev => prev + 1);
-          
-          // Start animations
-          controls.start({
-            opacity: 1,
-            y: 0,
-            transition: { 
-              duration: 0.5,
-              staggerChildren: 0.1
-            }
-          });
-          
-          // Reset AOS animations when this section comes into view
-          if (window.AOS) {
-            setTimeout(() => {
-              window.AOS.refreshHard(); // Force a full refresh of all animations
-            }, 100);
-          }
-        } else {
-          // Reset animations when section is out of view
-          controls.start({
-            opacity: 0,
-            y: 20,
-            transition: { duration: 0.3 }
-          });
-        }
-      },
-      {
-        root: null,
-        threshold: 0.1, // Trigger when 10% of the element is visible
-        rootMargin: "-10% 0px" // Trigger slightly before element comes into view
-      }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, [controls]);
+  // Use multiple refs with useInView for more granular control
+  const isSectionInView = useInView(sectionRef, { amount: 0.1 });
+  const isTitleInView = useInView(titleRef, { amount: 0.5 });
+  const isGridInView = useInView(gridRef, { amount: 0.1 });
+  const isButtonInView = useInView(buttonRef, { amount: 0.5 });
 
   // Animation variants
   const containerVariants = {
@@ -179,61 +130,67 @@ const Projects = () => {
   return (
     <section id="projects" ref={sectionRef} className="relative py-20 md:py-32">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-20 2xl:px-32">
-        {/* Section Title with animation that resets */}
-        <motion.div
-          key={`title-${animationCount}`} // Force re-render and animation
-          variants={titleVariants}
-          initial="hidden"
-          animate={isVisible ? "visible" : "hidden"}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-transparent 
-                       bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 mb-4">
+        {/* Section Title with animation */}
+        <div ref={titleRef} className="text-center mb-16">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            animate={isTitleInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.7 }}
+            className="text-3xl md:text-4xl lg:text-5xl font-bold text-transparent 
+                     bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 mb-4"
+          >
             Featured Projects
-          </h2>
+          </motion.h2>
           <motion.div 
             initial={{ width: 0 }}
-            animate={isVisible ? { width: "6rem" } : { width: 0 }}
+            animate={isTitleInView ? { width: "6rem" } : { width: 0 }}
             transition={{ duration: 0.8 }}
             className="h-1 bg-gradient-to-r from-cyan-400 to-blue-500 mx-auto mb-4"
           />
           <motion.p
-            variants={titleVariants}
+            initial={{ opacity: 0, y: 20 }}
+            animate={isTitleInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
             className="text-gray-400 max-w-2xl mx-auto"
           >
             Showcasing my journey through full-stack development, from real-time applications 
             to AI-powered solutions
           </motion.p>
-        </motion.div>
+        </div>
         
         {/* Projects Grid */}
-        <motion.div
-          key={`grid-${animationCount}`} // Force re-render and animation
-          variants={containerVariants}
-          initial="hidden"
-          animate={isVisible ? "visible" : "hidden"}
-          className="grid grid-cols-1 xl:grid-cols-2 gap-8 max-w-7xl mx-auto"
-        >
+        <div ref={gridRef} className="grid grid-cols-1 xl:grid-cols-2 gap-8 max-w-7xl mx-auto">
           {projects.map((project, index) => (
-            <ProjectCard 
-              key={`project-${index}-${animationCount}`} // Force re-render and animation
-              project={project} 
-              index={index}
-              isVisible={isVisible}
-              animationCount={animationCount}
-            />
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              animate={isGridInView ? 
+                { 
+                  opacity: 1, 
+                  y: 0,
+                  transition: { 
+                    duration: 0.5,
+                    delay: index * 0.1 
+                  }
+                } : 
+                { opacity: 0, y: 30 }
+              }
+            >
+              <ProjectCard 
+                project={project} 
+                index={index}
+                isVisible={isGridInView}
+              />
+            </motion.div>
           ))}
-        </motion.div>
+        </div>
         
         {/* GitHub Link */}
-        <motion.div
-          key={`github-${animationCount}`} // Force re-render and animation
-          initial={{ opacity: 0, y: 20 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ delay: 0.6 }}
-          className="text-center mt-16"
-        >
+        <div ref={buttonRef} className="text-center mt-16">
           <motion.a
+            initial={{ opacity: 0, y: 20 }}
+            animate={isButtonInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.5 }}
             href="https://github.com/MrDivyanshAgrawal"
             target="_blank" 
             rel="noopener noreferrer"
@@ -247,23 +204,21 @@ const Projects = () => {
             <FiGithub className="text-xl" />
             See More on GitHub
           </motion.a>
-        </motion.div>
+        </div>
       </div>
 
       {/* Background decorations with animation */}
       <motion.div 
-        key={`bg1-${animationCount}`} // Force re-render
         initial={{ opacity: 0, scale: 0.8 }}
-        animate={isVisible ? 
+        animate={isSectionInView ? 
           { opacity: 0.5, scale: 1, transition: { duration: 1 } } : 
           { opacity: 0, scale: 0.8 }
         }
         className="absolute top-20 right-0 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl -z-10" 
       />
       <motion.div 
-        key={`bg2-${animationCount}`} // Force re-render
         initial={{ opacity: 0, scale: 0.8 }}
-        animate={isVisible ? 
+        animate={isSectionInView ? 
           { opacity: 0.5, scale: 1, transition: { duration: 1, delay: 0.2 } } : 
           { opacity: 0, scale: 0.8 }
         }

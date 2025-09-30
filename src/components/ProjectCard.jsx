@@ -1,25 +1,12 @@
-import { useState, useRef, useEffect } from 'react';
-import { motion, useAnimation } from 'framer-motion';
+import { useState, useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import { techIcons } from './Icons';
 import { FiExternalLink, FiGithub } from 'react-icons/fi';
 
-const ProjectCard = ({ project, index, isVisible, animationCount }) => {
+const ProjectCard = ({ project, index }) => {
   const [isHovered, setIsHovered] = useState(false);
   const cardRef = useRef(null);
-  const controls = useAnimation();
-
-  // Reset and restart animations when visibility or animation count changes
-  useEffect(() => {
-    if (isVisible) {
-      controls.start({
-        opacity: 1, 
-        y: 0, 
-        transition: { duration: 0.5, delay: index * 0.1 }
-      });
-    } else {
-      controls.start({ opacity: 0, y: 30 });
-    }
-  }, [isVisible, animationCount, controls, index]);
+  const isInView = useInView(cardRef, { once: false, amount: 0.2 });
 
   // Card animation variants
   const cardVariants = {
@@ -50,14 +37,13 @@ const ProjectCard = ({ project, index, isVisible, animationCount }) => {
   return (
     <motion.div
       ref={cardRef}
-      key={`card-${index}-${animationCount}`} // Force re-animation
       variants={cardVariants}
       initial="hidden"
-      animate={controls}
+      animate={isInView ? "visible" : "hidden"}
       whileHover={{ scale: 1.02 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="relative group"
+      className="relative group h-full" // Added h-full for full height
     >
       <motion.div
         initial={{ boxShadow: "0 0 0 rgba(6, 182, 212, 0)" }}
@@ -68,18 +54,18 @@ const ProjectCard = ({ project, index, isVisible, animationCount }) => {
         transition={{ duration: 0.3 }}
         className="relative bg-gray-800/50 backdrop-blur-sm rounded-xl overflow-hidden
                 border border-gray-700 hover:border-cyan-400/50
-                transition-all duration-300 h-full"
+                transition-all duration-300 h-full flex flex-col" // Added flex-col to enable flex child stretching
       >
         {/* Project Image with Error Handling */}
-        <div className="relative h-48 md:h-56 overflow-hidden">
+        <div className="relative h-48 md:h-56 overflow-hidden flex-shrink-0"> {/* Added flex-shrink-0 to prevent image from shrinking */}
           <motion.img
-            src={project.image || "https://via.placeholder.com/800x400"}
+            src={project.image || null}
             alt={project.title}
             className="w-full h-full object-cover"
             animate={{ scale: isHovered ? 1.05 : 1 }}
             transition={{ duration: 0.4 }}
             onError={(e) => {
-              e.target.src = "https://via.placeholder.com/800x400?text=Project+Preview";
+              e.target.src = null;
             }}
           />
           
@@ -127,10 +113,11 @@ const ProjectCard = ({ project, index, isVisible, animationCount }) => {
         </div>
 
         {/* Project Content */}
-        <div className="p-6">
+        <div className="p-6 flex-1 flex flex-col"> {/* Added flex-1 and flex-col to fill available space */}
           <div className="flex items-start justify-between mb-3">
             <motion.h3
-              animate={isVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
+              initial={{ opacity: 0, x: -10 }}
+              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
               transition={{ duration: 0.4, delay: index * 0.1 + 0.2 }}
               className="text-xl md:text-2xl font-bold text-white group-hover:text-cyan-400 
                        transition-colors duration-300 line-clamp-1"
@@ -140,9 +127,8 @@ const ProjectCard = ({ project, index, isVisible, animationCount }) => {
             {/* Live indicator */}
             {project.demo && (
               <motion.span 
-                key={`live-${animationCount}`} // Force re-animation
                 initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
+                animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
                 transition={{ 
                   type: "spring",
                   stiffness: 400,
@@ -150,7 +136,7 @@ const ProjectCard = ({ project, index, isVisible, animationCount }) => {
                   delay: index * 0.1 + 0.4
                 }}
                 className="flex items-center gap-1 text-xs text-green-400 bg-green-400/10 
-                           px-2 py-1 rounded-full whitespace-nowrap"
+                           px-2 py-1 rounded-full whitespace-nowrap flex-shrink-0" // Added flex-shrink-0
               >
                 <motion.span 
                   animate={{ scale: [1, 1.5, 1] }}
@@ -167,24 +153,23 @@ const ProjectCard = ({ project, index, isVisible, animationCount }) => {
           </div>
           
           <motion.p
-            key={`desc-${animationCount}`} // Force re-animation
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 + 0.3 }}
-            className="text-gray-300 mb-6 line-clamp-3 text-sm md:text-base"
+            className="text-gray-300 mb-6 line-clamp-3 text-sm md:text-base flex-1" // Added flex-1 to push tags to bottom
           >
             {project.description}
           </motion.p>
           
           {/* Technologies */}
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 mt-auto"> {/* Added mt-auto to push to bottom */}
             {project.technologies.map((tech, techIndex) => (
               <motion.span
-                key={`tech-${techIndex}-${animationCount}`} // Force re-animation
+                key={`tech-${techIndex}`}
                 custom={techIndex} // Pass index to variants for staggered animation
                 variants={tagVariants}
                 initial="hidden"
-                animate={isVisible ? "visible" : "hidden"}
+                animate={isInView ? "visible" : "hidden"}
                 whileHover={{ 
                   y: -5, 
                   backgroundColor: "rgba(6, 182, 212, 0.1)",
@@ -196,7 +181,7 @@ const ProjectCard = ({ project, index, isVisible, animationCount }) => {
               >
                 <motion.span 
                   className="text-lg"
-                  animate={isVisible ? { rotate: [0, 15, 0, -15, 0] } : {}}
+                  animate={isInView ? { rotate: [0, 15, 0, -15, 0] } : {}}
                   transition={{ 
                     duration: 1, 
                     delay: 0.5 + techIndex * 0.05 + index * 0.02,

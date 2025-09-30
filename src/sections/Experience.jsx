@@ -1,66 +1,28 @@
-import { motion, useAnimation } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { FiBriefcase, FiCalendar, FiAward, FiTrendingUp } from 'react-icons/fi';
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 
 const Experience = () => {
-  const controls = useAnimation();
   const sectionRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  // Set up intersection observer to trigger animations every time the section is visible
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        // Update visibility state
-        setIsVisible(entry.isIntersecting);
-        
-        if (entry.isIntersecting) {
-          controls.start("visible");
-          // Refresh AOS animations
-          if (window.AOS) {
-            window.AOS.refresh();
-          }
-        } else {
-          controls.start("hidden");
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, [controls]);
+  const titleRef = useRef(null);
+  const timelineRef = useRef(null);
+  const contentRef = useRef(null);
+  const messageRef = useRef(null);
+  
+  // Properly initialize the refs array
+  const experienceRef = useRef(null);
+  
+  // Use inView to check visibility of different sections
+  const isSectionInView = useInView(sectionRef, { amount: 0.1 });
+  const isTitleInView = useInView(titleRef, { amount: 0.5 });
+  const isTimelineInView = useInView(timelineRef, { amount: 0.3 });
+  const isContentInView = useInView(contentRef, { amount: 0.2 });
+  const isMessageInView = useInView(messageRef, { amount: 0.5 });
+  
+  // Single ref for the one experience we have
+  const isExperienceInView = useInView(experienceRef, { amount: 0.3 });
 
   // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6
-      }
-    }
-  };
-
   const timelineDotVariants = {
     hidden: { scale: 0, opacity: 0 },
     visible: {
@@ -112,29 +74,29 @@ const Experience = () => {
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-32">
         {/* Section Title */}
-        <motion.div
-          initial="hidden"
-          animate={isVisible ? "visible" : "hidden"}
-          variants={itemVariants}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-transparent 
-                       bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 mb-4">
+        <div ref={titleRef} className="text-center mb-16">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            animate={isTitleInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.7 }}
+            className="text-3xl md:text-4xl lg:text-5xl font-bold text-transparent 
+                     bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 mb-4"
+          >
             Experience
-          </h2>
+          </motion.h2>
           <motion.div 
             initial={{ width: 0 }}
-            animate={isVisible ? { width: "6rem" } : { width: 0 }}
+            animate={isTitleInView ? { width: "6rem" } : { width: 0 }}
             transition={{ duration: 0.8 }}
             className="h-1 bg-gradient-to-r from-cyan-400 to-blue-500 mx-auto"
           />
-        </motion.div>
+        </div>
         
-        <div className="relative">
+        <div ref={timelineRef} className="relative">
           {/* Timeline line for desktop - animated */}
           <motion.div 
             initial={{ height: 0, opacity: 0 }}
-            animate={isVisible ? { height: "100%", opacity: 1 } : { height: 0, opacity: 0 }}
+            animate={isTimelineInView ? { height: "100%", opacity: 1 } : { height: 0, opacity: 0 }}
             transition={{ duration: 1.5 }}
             className="absolute left-1/2 transform -translate-x-1/2 w-0.5 
                     bg-gradient-to-b from-cyan-400/50 to-transparent hidden lg:block"
@@ -143,22 +105,17 @@ const Experience = () => {
           {/* Timeline line for mobile - animated */}
           <motion.div
             initial={{ height: 0, opacity: 0 }}
-            animate={isVisible ? { height: "100%", opacity: 1 } : { height: 0, opacity: 0 }}
+            animate={isTimelineInView ? { height: "100%", opacity: 1 } : { height: 0, opacity: 0 }}
             transition={{ duration: 1.5 }}
             className="absolute left-8 w-0.5 bg-gradient-to-b 
                     from-cyan-400/50 to-transparent lg:hidden"
           />
           
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate={isVisible ? "visible" : "hidden"}
-            className="space-y-12"
-          >
+          <div ref={contentRef} className="space-y-12">
             {experiences.map((exp, index) => (
-              <motion.div 
+              <div 
                 key={index}
-                variants={itemVariants}
+                ref={experienceRef}
                 className={`relative ${index % 2 === 0 ? 'lg:pr-8' : 'lg:pl-8'}`}
               >
                 <div className={`lg:grid lg:grid-cols-2 lg:gap-8 
@@ -166,6 +123,8 @@ const Experience = () => {
                   {/* Timeline dot - with bouncy animation */}
                   <motion.div 
                     variants={timelineDotVariants}
+                    initial="hidden"
+                    animate={isExperienceInView ? "visible" : "hidden"}
                     className={`absolute top-8 bg-gray-900 p-3 rounded-full 
                                 border-4 border-cyan-400 shadow-lg shadow-cyan-400/20
                                 ${index % 2 === 0 
@@ -181,6 +140,8 @@ const Experience = () => {
                   >
                     <motion.div
                       variants={cardVariants}
+                      initial="hidden"
+                      animate={isExperienceInView ? "visible" : "hidden"}
                       whileHover={{ scale: 1.02 }}
                       className="relative bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 lg:p-8
                               border border-gray-700 hover:border-cyan-400/50
@@ -198,7 +159,9 @@ const Experience = () => {
                       <div className="relative z-10">
                         {/* Header */}
                         <motion.div 
-                          variants={itemVariants}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={isExperienceInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                          transition={{ duration: 0.5, delay: 0.2 }}
                           className={`flex flex-col ${index % 2 === 0 ? 'lg:items-end' : ''}`}
                         >
                           <h3 className="text-2xl font-bold text-white mb-2">{exp.title}</h3>
@@ -215,7 +178,11 @@ const Experience = () => {
                             {exp.achievements.map((achievement, i) => (
                               <motion.div
                                 key={i}
-                                variants={itemVariants}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={isExperienceInView ? 
+                                  { opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.3 + i * 0.1 } } : 
+                                  { opacity: 0, y: 20 }
+                                }
                                 whileHover={{ scale: 1.1, y: -3 }}
                                 className="flex items-center gap-2 px-3 py-1.5 bg-cyan-400/10 
                                        rounded-full border border-cyan-400/30"
@@ -232,7 +199,11 @@ const Experience = () => {
                           {exp.description.map((desc, i) => (
                             <motion.p
                               key={i}
-                              variants={itemVariants}
+                              initial={{ opacity: 0, y: 20 }}
+                              animate={isExperienceInView ? 
+                                { opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.4 + i * 0.1 } } : 
+                                { opacity: 0, y: 20 }
+                              }
                               className="text-gray-300 leading-relaxed"
                             >
                               {desc}
@@ -247,7 +218,11 @@ const Experience = () => {
                           {exp.skills.map((skill, i) => (
                             <motion.span 
                               key={i}
-                              variants={itemVariants}
+                              initial={{ opacity: 0, y: 20 }}
+                              animate={isExperienceInView ? 
+                                { opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.5 + i * 0.1 } } : 
+                                { opacity: 0, y: 20 }
+                              }
                               whileHover={{ 
                                 scale: 1.05, 
                                 color: "rgb(34, 211, 238)", 
@@ -268,39 +243,40 @@ const Experience = () => {
                   {/* Empty column for timeline layout */}
                   <div className="hidden lg:block" />
                 </div>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
         
         {/* Add more experiences prompt */}
-        <motion.div
-          variants={itemVariants}
-          initial="hidden"
-          animate={isVisible ? "visible" : "hidden"}
-          transition={{ delay: 0.8 }}
-          className="text-center mt-16"
-        >
-          <p className="text-gray-400 text-lg">
-            More experiences coming soon...
-          </p>
-        </motion.div>
+        <div ref={messageRef}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isMessageInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mt-16"
+          >
+            <p className="text-gray-400 text-lg">
+              More experiences coming soon...
+            </p>
+          </motion.div>
+        </div>
       </div>
       
       {/* Background decoration with animation */}
       <motion.div 
         initial={{ opacity: 0, scale: 0.8 }}
-        animate={isVisible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+        animate={isSectionInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
         transition={{ duration: 1.2 }}
         className="absolute top-1/2 right-0 transform translate-x-1/2 -translate-y-1/2 
-                w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl"
+                w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl -z-10"
       />
       <motion.div 
         initial={{ opacity: 0, scale: 0.8 }}
-        animate={isVisible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+        animate={isSectionInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
         transition={{ duration: 1.2, delay: 0.3 }}
         className="absolute bottom-0 left-0 transform -translate-x-1/2 
-                w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"
+                w-96 h-96 bg-blue-500/5 rounded-full blur-3xl -z-10"
       />
     </section>
   );

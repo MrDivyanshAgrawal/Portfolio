@@ -1,7 +1,6 @@
-// Footer.jsx - Remove scroll-to-top button completely
 import { motion, useAnimation } from 'framer-motion';
 import { FiGithub, FiLinkedin, FiMail, FiHeart, FiMapPin, FiPhone } from 'react-icons/fi';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { Link } from 'react-scroll';
 
 const Footer = () => {
@@ -10,14 +9,38 @@ const Footer = () => {
   const footerRef = useRef(null);
   const controls = useAnimation();
   
-  // Set up intersection observer to trigger animations
+  const containerVariants = useMemo(() => ({
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        staggerChildren: 0.1
+      }
+    }
+  }), []);
+
+  const itemVariants = useMemo(() => ({
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5 }
+    }
+  }), []);
+  
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsVisible(entry.isIntersecting);
         
         if (entry.isIntersecting) {
-          controls.start("visible");
+          // Small delay to ensure component is mounted
+          const timer = setTimeout(() => {
+            controls.start("visible");
+          }, 10);
+          return () => clearTimeout(timer);
         } else {
           controls.start("hidden");
         }
@@ -36,29 +59,6 @@ const Footer = () => {
     };
   }, [controls]);
 
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5 }
-    }
-  };
-
-  // Navigation links
   const navLinks = [
     { name: "Home", href: "#home" },
     { name: "About", href: "#about" },
@@ -98,7 +98,7 @@ const Footer = () => {
 
   return (
     <footer ref={footerRef} className="bg-gray-950 py-16 border-t border-gray-800/30 relative overflow-hidden">
-      {/* Background gradient decorations */}
+
       <div className="absolute top-0 left-1/4 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl -z-10" />
       <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl -z-10" />
       
@@ -109,7 +109,6 @@ const Footer = () => {
           animate={controls}
           className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12"
         >
-          {/* Column 1: Portfolio Info */}
           <motion.div variants={itemVariants}>
             <motion.h2 
               variants={itemVariants}
@@ -137,7 +136,6 @@ const Footer = () => {
               Connect with me over socials to explore collaboration opportunities or just say hello!
             </motion.p>
             
-            {/* Social Media Icons */}
             <motion.div 
               variants={itemVariants}
               className="flex space-x-3 mt-6"
@@ -160,7 +158,6 @@ const Footer = () => {
             </motion.div>
           </motion.div>
           
-          {/* Column 2: Quick Links */}
           <motion.div variants={itemVariants}>
             <motion.h2 
               variants={itemVariants}
@@ -213,7 +210,6 @@ const Footer = () => {
             </motion.div>
           </motion.div>
           
-          {/* Column 3: Contact Info */}
           <motion.div variants={itemVariants}>
             <motion.h2 
               variants={itemVariants}
@@ -278,7 +274,6 @@ const Footer = () => {
           </motion.div>
         </motion.div>
         
-        {/* Copyright Section */}
         <motion.div
           variants={itemVariants}
           initial="hidden"
