@@ -23,4 +23,4 @@ dist-ssr
 *.sln
 *.sw?
 
-public/Profile/ProfileImage1.jpg
+tailwind.config.js
