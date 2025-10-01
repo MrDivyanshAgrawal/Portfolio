@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-scroll';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiMenu, FiX, FiChevronDown } from 'react-icons/fi';
 
@@ -32,10 +31,9 @@ const Navbar = () => {
     const handleScroll = () => {
       const isScrolled = window.scrollY > 50;
       setScrolled(isScrolled);
-      updateNavHeight(); // Update height when navbar changes (on scroll)
+      updateNavHeight();
     };
 
-    // Initial height calculation
     updateNavHeight();
 
     window.addEventListener('scroll', handleScroll);
@@ -47,13 +45,44 @@ const Navbar = () => {
     };
   }, [scrolled]);
 
-  // Calculate optimal offset value - adjusted to better position content under navbar
-  const scrollOffset = -(navbarHeight + 20); // Adjusted for better positioning
+  // Smooth scroll helper: accounts for navbar height
+  const handleSmoothScroll = (e, id) => {
+    e.preventDefault();
+
+    const el = document.getElementById(id);
+    if (el) {
+      const scrollY = el.getBoundingClientRect().top + window.pageYOffset - navbarHeight - 20;
+      window.scrollTo({ top: scrollY, behavior: 'smooth' });
+      // update hash after scroll
+      window.history.replaceState(null, '', `#${id}`);
+      setActiveSection(id);
+    }
+  };
+
+  // For setting active section on scroll
+  useEffect(() => {
+    const onScroll = () => {
+      let current = 'home';
+      navItems.forEach(item => {
+        const section = document.getElementById(item.to);
+        if (section) {
+          const offset = section.offsetTop - navbarHeight - 40;
+          if (window.scrollY >= offset) {
+            current = item.to;
+          }
+        }
+      });
+      setActiveSection(current);
+    };
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+    // eslint-disable-next-line
+  }, [navbarHeight]);
 
   return (
     <>
       <motion.nav
-        id="navbar" // Add ID for height calculation
+        id="navbar"
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
@@ -65,13 +94,10 @@ const Navbar = () => {
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-16 flex justify-between items-center">
           {/* Logo Section */}
-          <Link
-            to="home"
-            spy={true}
-            smooth={true}
-            offset={0} // Set to 0 for home section
-            duration={800}
+          <a
+            href="#home"
             className="cursor-pointer flex items-center group"
+            onClick={e => handleSmoothScroll(e, 'home')}
           >
             <div className="w-8 h-8 sm:w-10 sm:h-10 mr-2 overflow-hidden rounded-full border-2 border-cyan-500/30 group-hover:border-cyan-500 transition-colors duration-300">
               <motion.img
@@ -88,27 +114,23 @@ const Navbar = () => {
               </span>
               <span className="text-white text-xl sm:text-2xl font-bold">Agrawal</span>
             </div>
-          </Link>
+          </a>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-1 lg:space-x-2">
             {navItems.map((item, index) => (
-              <Link
+              <a
                 key={index}
-                to={item.to}
-                spy={true}
-                smooth={true}
-                offset={item.to === 'home' ? 0 : scrollOffset} // Special handling for home
-                duration={800} // Increased for smoother scrolling
-                onSetActive={() => setActiveSection(item.to)}
-                className={`text-sm lg:text-base font-medium px-3 py-2 rounded-lg transition-all duration-300 hover:bg-cyan-500/10 hover:text-cyan-400 ${
+                href={`#${item.to}`}
+                className={`cursor-pointer text-sm lg:text-base font-medium px-3 py-2 rounded-lg transition-all duration-300 hover:bg-cyan-500/10 hover:text-cyan-400 ${
                   activeSection === item.to
                     ? 'text-cyan-400 bg-cyan-500/10'
                     : 'text-gray-300'
                 }`}
+                onClick={e => handleSmoothScroll(e, item.to)}
               >
                 {item.name}
-              </Link>
+              </a>
             ))}
           </div>
 
@@ -132,7 +154,6 @@ const Navbar = () => {
       <AnimatePresence>
         {isOpen && (
           <>
-            {/* Overlay that covers only part of the screen */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -142,7 +163,6 @@ const Navbar = () => {
               style={{ backdropFilter: 'blur(4px)' }}
             />
             
-            {/* Right side slide-in menu panel */}
             <motion.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
@@ -176,22 +196,20 @@ const Navbar = () => {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
-                        <Link
-                          to={item.to}
-                          spy={true}
-                          smooth={true}
-                          offset={item.to === 'home' ? 0 : scrollOffset}
-                          duration={800}
-                          className={`block py-3 px-4 rounded-lg text-base font-medium transition-all duration-300 ${
+                        <a
+                          href={`#${item.to}`}
+                          className={`cursor-pointer block py-3 px-4 rounded-lg text-base font-medium transition-all duration-300 ${
                             activeSection === item.to
                               ? 'text-cyan-400 bg-cyan-500/10'
                               : 'text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/10'
                           }`}
-                          onClick={() => setIsOpen(false)}
-                          onSetActive={() => setActiveSection(item.to)}
+                          onClick={e => {
+                            setIsOpen(false);
+                            handleSmoothScroll(e, item.to);
+                          }}
                         >
                           {item.name}
-                        </Link>
+                        </a>
                       </motion.div>
                     ))}
                   </div>
