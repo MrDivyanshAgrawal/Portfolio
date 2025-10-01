@@ -115,7 +115,7 @@ const Projects = () => {
     {
       title: "Express-Emergency-System",
       description: "Web-based system that reduced emergency response times by 25%, recognized among Top 10 teams in HacktheChain 2.0 hackathon.",
-      image: "/emergency-response-preview.png",
+      image: "/Project/express.png",
       github: "https://github.com/MrDivyanshAgrawal/Express-Emergency-System",
       demo: null,
       technologies: [

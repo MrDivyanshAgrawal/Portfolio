@@ -135,7 +135,7 @@ const Hero = () => {
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ delay: 0.2, duration: 0.5 }}
             >
-              Hey there 👋
+              👋 Hey, I'm
             </motion.span>
             
             <motion.h1
@@ -204,7 +204,7 @@ const Hero = () => {
               </motion.button>
               
               <motion.a
-                href="/resume.pdf"
+                href="/Divyansh_Agrawal_Resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}

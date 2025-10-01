@@ -1,6 +1,6 @@
-// AnimatedBackground.jsx - Web Development & Computer Science Theme (Fixed)
+// AnimatedBackground.jsx - Web Development & Computer Science Theme (Improved)
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { FaReact, FaNodeJs, FaCode, FaDatabase, FaServer, FaGithub, FaLaptopCode, FaCogs, FaBrain } from 'react-icons/fa';
 import { SiJavascript, SiCss3, SiHtml5, SiMongodb, SiTailwindcss } from 'react-icons/si';
 
@@ -10,13 +10,22 @@ const AnimatedBackground = () => {
     width: typeof window !== 'undefined' ? window.innerWidth : 1200, 
     height: typeof window !== 'undefined' ? window.innerHeight : 800 
   });
+  
+  // Throttle mouse movement updates to improve performance
+  const mouseMoveTimeoutRef = useRef(null);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
-      setMousePosition({
-        x: e.clientX,
-        y: e.clientY,
-      });
+      // Throttle mouse movement updates
+      if (!mouseMoveTimeoutRef.current) {
+        mouseMoveTimeoutRef.current = setTimeout(() => {
+          setMousePosition({
+            x: e.clientX,
+            y: e.clientY,
+          });
+          mouseMoveTimeoutRef.current = null;
+        }, 10); // Small delay to reduce performance impact
+      }
     };
 
     const handleResize = () => {
@@ -32,10 +41,13 @@ const AnimatedBackground = () => {
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', handleResize);
+      if (mouseMoveTimeoutRef.current) {
+        clearTimeout(mouseMoveTimeoutRef.current);
+      }
     };
   }, []);
 
-  // Tech icons for the floating elements - Removed SiAlgorithm and added FaCogs and FaBrain instead
+  // Tech icons for the floating elements
   const techIcons = [
     <FaReact key="react" />,
     <SiJavascript key="js" />,
@@ -52,6 +64,28 @@ const AnimatedBackground = () => {
     <FaCogs key="cogs" />,
     <FaBrain key="brain" />
   ];
+
+  // Pre-calculate random positions to avoid recalculation on renders
+  const generateRandomPositions = (count) => {
+    const positions = [];
+    for (let i = 0; i < count; i++) {
+      positions.push({
+        initialX: Math.random() * windowSize.width,
+        initialY: Math.random() * windowSize.height,
+        finalX: Math.random() * windowSize.width,
+        finalY: Math.random() * windowSize.height,
+        duration: Math.random() * 50 + 30,
+        size: Math.random() * 20 + 15,
+        rotation: Math.random() * 360,
+      });
+    }
+    return positions;
+  };
+
+  // Generate positions for icons, code snippets, and particles
+  const iconPositions = useRef(generateRandomPositions(techIcons.length)).current;
+  const codePositions = useRef(generateRandomPositions(15)).current;
+  const particlePositions = useRef(generateRandomPositions(60)).current; // Reduced count for better performance
 
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none">
@@ -98,13 +132,21 @@ const AnimatedBackground = () => {
                  w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-3xl"
       />
       
-      {/* Mouse follow gradient */}
-      <div
-        className="absolute w-[600px] h-[600px] opacity-20 transition-all duration-700 ease-out pointer-events-none"
+      {/* Mouse follow gradient - smooth animation with spring physics */}
+      <motion.div
+        className="absolute w-[600px] h-[600px] opacity-20 pointer-events-none"
+        animate={{
+          x: mousePosition.x - 300,
+          y: mousePosition.y - 300,
+        }}
+        transition={{
+          type: "spring",
+          mass: 0.5,
+          stiffness: 50,
+          damping: 20,
+        }}
         style={{
           background: `radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, transparent 70%)`,
-          left: mousePosition.x - 300,
-          top: mousePosition.y - 300,
         }}
       />
       
@@ -128,36 +170,44 @@ const AnimatedBackground = () => {
         <rect width="100%" height="100%" fill="url(#circuit)" />
       </svg>
       
-      {/* Floating Tech Icons */}
-      {techIcons.map((icon, i) => (
-        <motion.div
-          key={i}
-          className="absolute text-cyan-500/20"
-          style={{ 
-            fontSize: Math.random() * 20 + 15 
-          }}
-          initial={{
-            x: Math.random() * windowSize.width,
-            y: Math.random() * windowSize.height,
-            rotate: Math.random() * 360,
-          }}
-          animate={{
-            x: Math.random() * windowSize.width,
-            y: Math.random() * windowSize.height,
-            rotate: Math.random() * 720 - 360,
-          }}
-          transition={{
-            duration: Math.random() * 50 + 30,
-            repeat: Infinity,
-            repeatType: "reverse",
-            ease: "linear"
-          }}
-        >
-          {icon}
-        </motion.div>
-      ))}
+      {/* Floating Tech Icons with improved mouse hover interaction */}
+      {techIcons.map((icon, i) => {
+        const pos = iconPositions[i];
+        
+        return (
+          <motion.div
+            key={i}
+            className="absolute text-cyan-500/20 transition-colors duration-300 hover:text-cyan-500/40"
+            style={{ 
+              fontSize: pos.size,
+            }}
+            initial={{
+              x: pos.initialX,
+              y: pos.initialY,
+              rotate: pos.rotation,
+            }}
+            animate={{
+              x: pos.finalX,
+              y: pos.finalY,
+              rotate: pos.rotation + 360,
+            }}
+            transition={{
+              duration: pos.duration,
+              repeat: Infinity,
+              repeatType: "mirror",
+              ease: "linear"
+            }}
+            whileHover={{
+              scale: 1.3,
+              transition: { duration: 0.3 }
+            }}
+          >
+            {icon}
+          </motion.div>
+        );
+      })}
       
-      {/* Floating code snippets */}
+      {/* Floating code snippets - Optimized and with improved hover */}
       {[...Array(15)].map((_, i) => {
         const codeSnippet = [
           "{</>}",
@@ -177,23 +227,29 @@ const AnimatedBackground = () => {
           "O(n log n)"
         ][i % 15];
         
+        const pos = codePositions[i];
+        
         return (
           <motion.div
             key={i + 'code'}
-            className="absolute text-cyan-500/10 font-mono text-xs sm:text-sm"
+            className="absolute text-cyan-500/10 font-mono text-xs sm:text-sm transition-colors duration-300 hover:text-cyan-500/30"
             initial={{
-              x: Math.random() * windowSize.width,
-              y: Math.random() * windowSize.height,
+              x: pos.initialX,
+              y: pos.initialY,
             }}
             animate={{
-              x: Math.random() * windowSize.width,
-              y: Math.random() * windowSize.height,
+              x: pos.finalX,
+              y: pos.finalY,
             }}
             transition={{
-              duration: Math.random() * 40 + 20,
+              duration: pos.duration * 0.8, // Slightly faster than icons
               repeat: Infinity,
-              repeatType: "reverse",
+              repeatType: "mirror",
               ease: "linear"
+            }}
+            whileHover={{
+              scale: 1.2,
+              transition: { duration: 0.3 }
             }}
           >
             {codeSnippet}
@@ -201,27 +257,31 @@ const AnimatedBackground = () => {
         );
       })}
       
-      {/* Floating particles - Optimized */}
-      {[...Array(70)].map((_, i) => (
-        <motion.div
-          key={i + 'particle'}
-          className="absolute w-1 h-1 bg-cyan-400/30 rounded-full"
-          initial={{
-            x: Math.random() * windowSize.width,
-            y: Math.random() * windowSize.height,
-          }}
-          animate={{
-            x: Math.random() * windowSize.width,
-            y: Math.random() * windowSize.height,
-          }}
-          transition={{
-            duration: Math.random() * 20 + 10,
-            repeat: Infinity,
-            repeatType: "reverse",
-            ease: "linear"
-          }}
-        />
-      ))}
+      {/* Floating particles - Reduced count and improved performance */}
+      {[...Array(60)].map((_, i) => {
+        const pos = particlePositions[i];
+        
+        return (
+          <motion.div
+            key={i + 'particle'}
+            className="absolute w-1 h-1 bg-cyan-400/30 rounded-full"
+            initial={{
+              x: pos.initialX,
+              y: pos.initialY,
+            }}
+            animate={{
+              x: pos.finalX,
+              y: pos.finalY,
+            }}
+            transition={{
+              duration: pos.duration * 0.5, // Faster for particles
+              repeat: Infinity,
+              repeatType: "mirror",
+              ease: "linear"
+            }}
+          />
+        );
+      })}
     </div>
   );
 };

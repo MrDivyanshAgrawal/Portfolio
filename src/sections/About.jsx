@@ -219,7 +219,7 @@ const About = () => {
                 className="flex flex-wrap gap-4 pt-4"
               >
                 <motion.a
-                  href="/resume.pdf"
+                  href="/Divyansh_Agrawal_Resume.pdf"
                   download
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
