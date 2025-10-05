@@ -1,4 +1,3 @@
-// src/sections/Projects.jsx
 import { motion, useInView } from 'framer-motion';
 import ProjectCard from '../components/ProjectCard';
 import { FiGithub } from 'react-icons/fi';
@@ -88,15 +87,34 @@ const Projects = () => {
       ]
     },
     {
-      title: "Text Similarity Recommender",
-      description: "Python app using TF-IDF and cosine similarity to analyze and recommend related documents with interactive visualizations.",
-      image: "/Project/textsimilarity.png",
-      github: "https://github.com/MrDivyanshAgrawal/text-similarity-app",
-      demo: "https://app-app-k9kdcnscuhdqvr4lceb2un.streamlit.app/",
+      title: "MedCare - Hospital Management System",
+      description: "A full-stack healthcare platform built with MERN stack, featuring electronic health records, appointment scheduling, and secure patient portals. Includes role-based access, Stripe payments, and comprehensive analytics.",
+      image: "/Project/medcare.png",
+      github: "https://github.com/MrDivyanshAgrawal/MedCare",
+      demo: "https://medcare-fwo8.onrender.com",
       technologies: [
-        { name: "Python", icon: "python" },
-        { name: "NLTK", icon: "python" },
-        { name: "Streamlit", icon: "python" },
+        { name: "MongoDB", icon: "mongodb" },
+        { name: "Express", icon: "express" },
+        { name: "React", icon: "react" },
+        { name: "Node.js", icon: "node" },
+        { name: "Stripe", icon: "stripe" },
+        { name: "JWT", icon: "jwt" },
+        { name: "Cloudinary", icon: "cloudinary" },
+        { name: "Tailwind", icon: "tailwind" },
+      ]
+    },
+    {
+      title: "Task Manager",
+      description: "Modern, responsive task management app with priority levels, filtering, search, and customizable themes. Features smooth animations and full local storage persistence.",
+      image: "/Project/task.png",
+      github: "https://github.com/MrDivyanshAgrawal/TaskManager",
+      demo: "https://taskmanager-divyansh-agrawal.vercel.app/",
+      technologies: [
+        { name: "React", icon: "react" },
+        { name: "Tailwind CSS", icon: "tailwind" },
+        { name: "Framer Motion", icon: "framer" },
+        { name: "LocalStorage", icon: "api" },
+        { name: "Vite", icon: "vite" },
       ]
     },
     {
@@ -113,16 +131,27 @@ const Projects = () => {
       ]
     },
     {
+      title: "Text Similarity Recommender",
+      description: "Python app using TF-IDF and cosine similarity to analyze and recommend related documents with interactive visualizations.",
+      image: "/Project/textsimilarity.png",
+      github: "https://github.com/MrDivyanshAgrawal/text-similarity-app",
+      demo: "https://app-app-k9kdcnscuhdqvr4lceb2un.streamlit.app/",
+      technologies: [
+        { name: "Python", icon: "python" },
+        { name: "NLTK", icon: "python" },
+        { name: "Streamlit", icon: "python" },
+      ]
+    },
+    {
       title: "Express-Emergency-System",
       description: "Web-based system that reduced emergency response times by 25%, recognized among Top 10 teams in HacktheChain 2.0 hackathon.",
       image: "/Project/express.png",
       github: "https://github.com/MrDivyanshAgrawal/Express-Emergency-System",
       demo: null,
       technologies: [
-        { name: "React", icon: "react" },
-        { name: "Node.js", icon: "node" },
-        { name: "MongoDB", icon: "mongodb" },
-        { name: "Socket.IO", icon: "socketio" },
+        { name: "HTML", icon: "html" },
+        { name: "CSS", icon: "css" },
+        { name: "Javascript", icon: "javascript" }
       ]
     }
   ];
