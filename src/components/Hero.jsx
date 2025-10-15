@@ -264,7 +264,7 @@ const Hero = () => {
               {/* Main Photo Frame with Skill Badges */}
               <div className="relative rounded-full overflow-visible border-4 border-cyan-500/30 p-2 bg-gray-900/70 shadow-2xl">
                 <img 
-                  src="/Profile.jpg" 
+                  src="/Profile.jpeg" 
                   alt="Divyansh Agrawal"
                   className="rounded-full w-full h-auto object-cover aspect-square"
                 />
