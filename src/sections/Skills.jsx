@@ -106,7 +106,7 @@ const Skills = () => {
   const cpPlatforms = [
     {
       platform: "LeetCode",
-      rating: "1840",
+      rating: "1845",
       problems: "450+",
       percentile: "Top 6.03%",
       gradient: "from-yellow-400 to-orange-500",
