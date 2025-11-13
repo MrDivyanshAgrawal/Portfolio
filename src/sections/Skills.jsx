@@ -106,21 +106,21 @@ const Skills = () => {
   const cpPlatforms = [
     {
       platform: "LeetCode",
-      rating: "1830",
+      rating: "1840",
       problems: "450+",
-      percentile: "Top 6.47%",
+      percentile: "Top 6.03%",
       gradient: "from-yellow-400 to-orange-500",
       bgGradient: "from-yellow-900/20 to-orange-900/20",
       icon: <SiLeetcode className="w-12 h-12" />,
       iconColor: "text-yellow-500",
-      progress: 85,
+      progress: 90,
       link: "https://leetcode.com/u/divyansh1004"
     },
     {
       platform: "CodeChef",
-      rating: "1500",
+      rating: "1556",
       problems: "115+",
-      percentile: "3★ Coder",
+      percentile: "2★ Coder",
       gradient: "from-amber-400 to-red-600",
       bgGradient: "from-amber-900/20 to-red-900/20",
       icon: <SiCodechef className="w-12 h-12" />,

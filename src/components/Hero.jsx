@@ -182,7 +182,7 @@ const Hero = () => {
               transition={{ delay: 0.7, duration: 0.7 }}
             >
               Computer Science student at IIIT Kota with 8.79/10 CGPA and expertise in
-              full stack development. Skilled in React, Node.js, and C++. Ranked in top 6.75% on
+              full stack development. Skilled in React, Node.js, and C++. Ranked in top 6.03% on
               LeetCode with 450+ algorithmic solutions and consistent problem-solving approach.
             </motion.p>
 

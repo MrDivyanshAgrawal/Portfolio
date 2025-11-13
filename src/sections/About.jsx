@@ -177,7 +177,7 @@ const About = () => {
                 My passion for competitive programming has helped me develop
                 strong problem-solving skills, placing me in the{" "}
                 <span className="text-cyan-400 font-medium">
-                  top 6.47% globally on LeetCode
+                  top 6.03% globally on LeetCode
                 </span>
                 .
               </motion.p>

@@ -103,32 +103,38 @@ const Education = () => {
   ];
 
   const achievements = [
-    {
-      title: "LeetCode Achievements",
-      description: "Earned 7 LeetCode badges including the prestigious 100 Days Badge, 50 Days Badge, and Contest badges",
-      highlight: "7 Badges"
-    },
-    {
-      title: "Google Cloud Arcade",
-      description: "Achieved 70+ badges and secured position in the elite Diamond League through consistent performance",
-      highlight: "Diamond League"
-    },
-    {
-      title: "Naukri Campus Recognition",
-      description: "Acquired 25 badges for comprehensive skill development across various technical domains",
-      highlight: "25 Badges"
-    },
-    {
-      title: "Science & Language Olympiads",
-      description: "Won Bronze Medals in both National Science Olympiad and French Olympiad",
-      highlight: "2 Bronze Medals"
-    },
-    {
-      title: "Academic Excellence",
-      description: "Consistent academic performer with 91% in Class X and maintaining 8.79 CGPA in college",
-      highlight: "Top Performer"
-    }
-  ];
+  {
+    title: "LeetCode Achievements",
+    description:
+      "Earned the prestigious Knight Badge for consistent problem-solving excellence and 8 LeetCode badges overall, including 100 Days, 50 Days, and Contest badges.",
+    highlight: "Knight Badge (8 Badges)"
+  },
+  {
+    title: "Google Cloud Arcade",
+    description:
+      "Achieved 70+ badges and secured position in the elite Diamond League through consistent performance.",
+    highlight: "Diamond League"
+  },
+  {
+    title: "Naukri Campus Recognition",
+    description:
+      "Acquired 25 badges for comprehensive skill development across various technical domains.",
+    highlight: "25 Badges"
+  },
+  {
+    title: "Science & Language Olympiads",
+    description:
+      "Won Bronze Medals in both National Science Olympiad and French Olympiad.",
+    highlight: "2 Bronze Medals"
+  },
+  {
+    title: "Academic Excellence",
+    description:
+      "Consistent academic performer with 91% in Class X and maintaining 8.79 CGPA in college.",
+    highlight: "Top Performer"
+  }
+];
+
 
   return (
     <section id="education" ref={sectionRef} className="relative py-20 md:py-32 overflow-hidden">
