@@ -107,7 +107,7 @@ const Education = () => {
     title: "LeetCode Achievements",
     description:
       "Earned the prestigious Knight Badge for consistent problem-solving excellence and 8 LeetCode badges overall, including 100 Days, 50 Days, and Contest badges.",
-    highlight: "Knight Badge (8 Badges)"
+    highlight: "Knight Badge"
   },
   {
     title: "Google Cloud Arcade",
