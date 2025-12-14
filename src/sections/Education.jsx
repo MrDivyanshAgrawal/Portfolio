@@ -130,7 +130,7 @@ const Education = () => {
   {
     title: "Academic Excellence",
     description:
-      "Consistent academic performer with 91% in Class X and maintaining 8.79 CGPA in college.",
+      "Consistent academic performer with 87.4% in Class X and maintaining 8.79 CGPA in college.",
     highlight: "Top Performer"
   }
 ];
