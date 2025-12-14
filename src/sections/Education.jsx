@@ -94,7 +94,7 @@ const Education = () => {
       institution: "St. Norbert Senior Secondary School",
       degree: "Secondary (Class X) - CBSE",
       duration: "2009 - 2019",
-      grade: "Percentage: 91%",
+      grade: "Percentage: 87.4%",
       icon: <FaSchool className="text-green-400 text-xl" />,
       logo: "/Education/School1.jpeg",
       highlights: ["10 Years of Academic Excellence", "Strong foundation in academics"],
