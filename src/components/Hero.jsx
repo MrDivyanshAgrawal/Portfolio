@@ -204,7 +204,7 @@ const Hero = () => {
               </motion.button>
               
               <motion.a
-                href="/Divyansh_Agrawal_Resume.pdf"
+                href="/DIVYANSH_AGRAWAL_RESUME.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
@@ -214,7 +214,7 @@ const Hero = () => {
                        border-cyan-400 hover:bg-cyan-400/10 hover:shadow-lg 
                        hover:shadow-cyan-400/25 text-sm sm:text-base flex items-center"
               >
-                <FaEnvelope className="mr-2" /> Resume
+                <FaFileAlt className="mr-2" /> Resume
               </motion.a>
             </motion.div>
 
