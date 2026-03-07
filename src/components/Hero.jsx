@@ -1,7 +1,7 @@
 // Hero.jsx - With updated scroll indicator and styling from reference
 import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
-import { FaLinkedin, FaGithub, FaInstagram, FaEnvelope, FaChevronDown, FaHtml5, FaReact } from 'react-icons/fa';
+import { FaLinkedin, FaGithub, FaInstagram, FaEnvelope, FaChevronDown, FaHtml5, FaReact, FaFileAlt } from 'react-icons/fa';
 import { SiCplusplus } from 'react-icons/si';
 import { useEffect, useState, useRef } from 'react';
 
