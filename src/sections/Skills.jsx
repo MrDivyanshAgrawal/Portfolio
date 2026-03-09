@@ -99,6 +99,7 @@ const Skills = () => {
         { name: "Postman", icon: "postman" },
         { name: "Vercel", icon: "vercel" },
         { name: "Render", icon: "render" },
+        { name: "Docker", icon: "docker" },
       ]
     },
   ];
