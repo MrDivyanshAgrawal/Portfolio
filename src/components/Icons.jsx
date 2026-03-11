@@ -106,7 +106,7 @@ export const techIcons = {
   postman: <SiPostman className="text-orange-500" />,
   vercel: <SiVercel className="text-white" />,
   render: <SiRender className="text-teal-400" />,
-  docker: <FaDocker className="text-blue-400" />,
+  docker: <FaDocker className="text-blue-600" />,
   
   // Competitive Programming
   leetcode: <SiLeetcode className="text-yellow-500" />,
