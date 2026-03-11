@@ -39,6 +39,7 @@ section [data-aos="fade-up"].text-center {
 
 /* Component styles */
 @layer components {
+  .btn-primary {
     @apply px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg 
     hover:from-cyan-600 hover:to-blue-700 transform hover:-translate-y-1 transition-all 
     duration-300 font-medium shadow-lg;
