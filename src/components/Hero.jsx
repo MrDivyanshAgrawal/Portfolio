@@ -1,4 +1,3 @@
-// Hero.jsx - With updated scroll indicator and styling from reference
 import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
 import { FaLinkedin, FaGithub, FaInstagram, FaEnvelope, FaChevronDown, FaHtml5, FaReact, FaFileAlt } from 'react-icons/fa';
@@ -11,7 +10,6 @@ const Hero = () => {
   const [isInView, setIsInView] = useState(false);
   const [windowWidth, setWindowWidth] = useState(typeof window !== "undefined" ? window.innerWidth : 0);
 
-  // Handle window resize and mouse movement
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
@@ -29,7 +27,6 @@ const Hero = () => {
       setIsInView(entry.isIntersecting);
     };
 
-    // Set up intersection observer
     const observer = new IntersectionObserver(handleIntersection, {
       threshold: 0.1
     });
@@ -51,7 +48,6 @@ const Hero = () => {
     };
   }, []);
 
-  // Adjust badge positions based on screen size
   const getBadgePositions = () => {
     if (windowWidth < 640) { // small mobile
       return {

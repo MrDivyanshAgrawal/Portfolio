@@ -16,12 +16,10 @@ const App = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate loading time
     const timer = setTimeout(() => {
       setLoading(false);
     }, 2000);
     
-    // Cleanup function
     return () => clearTimeout(timer);
   }, []);
 
@@ -38,8 +36,8 @@ const App = () => {
         <About />
         <Skills />
         <Experience />
-        <Projects />
         <Education />
+        <Projects />
         <Contact />
       </main>
       <Footer />

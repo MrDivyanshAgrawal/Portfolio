@@ -5,7 +5,6 @@ import App from './App.jsx'
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-// Initialize AOS animation library
 AOS.init({
   duration: 800,
   offset: 100,

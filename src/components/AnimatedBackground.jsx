@@ -1,4 +1,3 @@
-// AnimatedBackground.jsx - Web Development & Computer Science Theme (Improved)
 import { motion } from 'framer-motion';
 import { useEffect, useState, useRef } from 'react';
 import { FaReact, FaNodeJs, FaCode, FaDatabase, FaServer, FaGithub, FaLaptopCode, FaCogs, FaBrain } from 'react-icons/fa';
@@ -11,12 +10,10 @@ const AnimatedBackground = () => {
     height: typeof window !== 'undefined' ? window.innerHeight : 800 
   });
   
-  // Throttle mouse movement updates to improve performance
   const mouseMoveTimeoutRef = useRef(null);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
-      // Throttle mouse movement updates
       if (!mouseMoveTimeoutRef.current) {
         mouseMoveTimeoutRef.current = setTimeout(() => {
           setMousePosition({
@@ -47,7 +44,6 @@ const AnimatedBackground = () => {
     };
   }, []);
 
-  // Tech icons for the floating elements
   const techIcons = [
     <FaReact key="react" />,
     <SiJavascript key="js" />,
@@ -65,7 +61,6 @@ const AnimatedBackground = () => {
     <FaBrain key="brain" />
   ];
 
-  // Pre-calculate random positions to avoid recalculation on renders
   const generateRandomPositions = (count) => {
     const positions = [];
     for (let i = 0; i < count; i++) {
@@ -82,17 +77,13 @@ const AnimatedBackground = () => {
     return positions;
   };
 
-  // Generate positions for icons, code snippets, and particles
   const iconPositions = useRef(generateRandomPositions(techIcons.length)).current;
   const codePositions = useRef(generateRandomPositions(15)).current;
-  const particlePositions = useRef(generateRandomPositions(60)).current; // Reduced count for better performance
+  const particlePositions = useRef(generateRandomPositions(60)).current;
 
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none">
-      {/* Base dark gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-gray-950 via-gray-900 to-black" />
-      
-      {/* Animated gradient orbs */}
       <motion.div
         animate={{
           x: [0, 100, 0],

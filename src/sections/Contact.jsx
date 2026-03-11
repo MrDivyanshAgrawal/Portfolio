@@ -1,4 +1,3 @@
-// src/sections/Contact.jsx
 import { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { FiSend, FiMapPin, FiMail, FiPhone, FiGithub, FiLinkedin, FiArrowRight, FiCheck, FiExternalLink } from 'react-icons/fi';
@@ -14,13 +13,11 @@ const Contact = () => {
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [formErrors, setFormErrors] = useState({});
   
-  // Create refs for different sections
   const sectionRef = useRef(null);
   const titleRef = useRef(null);
   const infoCardRef = useRef(null);
   const formCardRef = useRef(null);
   
-  // Use inView to check visibility
   const isSectionInView = useInView(sectionRef, { amount: 0.1 });
   const isTitleInView = useInView(titleRef, { amount: 0.5 });
   const isInfoCardInView = useInView(infoCardRef, { amount: 0.3 });
@@ -44,7 +41,6 @@ const Contact = () => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
     
-    // Clear error when user starts typing
     if (formErrors[name]) {
       setFormErrors(prev => ({ ...prev, [name]: null }));
     }
@@ -57,13 +53,11 @@ const Contact = () => {
     
     setIsSubmitting(true);
     
-    // Simulate form submission
     setTimeout(() => {
       setIsSubmitting(false);
       setSubmitSuccess(true);
       setFormData({ name: '', email: '', message: '' });
       
-      // Reset success message after 5 seconds
       setTimeout(() => {
         setSubmitSuccess(false);
       }, 5000);

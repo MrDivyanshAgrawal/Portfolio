@@ -9,20 +9,16 @@ const Experience = () => {
   const contentRef = useRef(null);
   const messageRef = useRef(null);
   
-  // Properly initialize the refs array
   const experienceRef = useRef(null);
   
-  // Use inView to check visibility of different sections
   const isSectionInView = useInView(sectionRef, { amount: 0.1 });
   const isTitleInView = useInView(titleRef, { amount: 0.5 });
   const isTimelineInView = useInView(timelineRef, { amount: 0.3 });
   const isContentInView = useInView(contentRef, { amount: 0.2 });
   const isMessageInView = useInView(messageRef, { amount: 0.5 });
   
-  // Single ref for the one experience we have
   const isExperienceInView = useInView(experienceRef, { amount: 0.3 });
 
-  // Animation variants
   const timelineDotVariants = {
     hidden: { scale: 0, opacity: 0 },
     visible: {
@@ -73,7 +69,7 @@ const Experience = () => {
       className="relative py-20 md:py-32 overflow-hidden"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-32">
-        {/* Section Title */}
+
         <div ref={titleRef} className="text-center mb-16">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -93,7 +89,7 @@ const Experience = () => {
         </div>
         
         <div ref={timelineRef} className="relative">
-          {/* Timeline line for desktop - animated */}
+
           <motion.div 
             initial={{ height: 0, opacity: 0 }}
             animate={isTimelineInView ? { height: "100%", opacity: 1 } : { height: 0, opacity: 0 }}
@@ -102,7 +98,6 @@ const Experience = () => {
                     bg-gradient-to-b from-cyan-400/50 to-transparent hidden lg:block"
           />
           
-          {/* Timeline line for mobile - animated */}
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={isTimelineInView ? { height: "100%", opacity: 1 } : { height: 0, opacity: 0 }}
