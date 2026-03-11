@@ -19,7 +19,6 @@ const Navbar = () => {
   ];
 
   useEffect(() => {
-    // Handle navbar height for scroll offset calculation
     const updateNavHeight = () => {
       const navbar = document.getElementById('navbar');
       if (navbar) {
@@ -27,7 +26,6 @@ const Navbar = () => {
       }
     };
 
-    // Handle scroll detection
     const handleScroll = () => {
       const isScrolled = window.scrollY > 50;
       setScrolled(isScrolled);
@@ -45,7 +43,6 @@ const Navbar = () => {
     };
   }, [scrolled]);
 
-  // Smooth scroll helper: accounts for navbar height
   const handleSmoothScroll = (e, id) => {
     e.preventDefault();
 
@@ -53,13 +50,11 @@ const Navbar = () => {
     if (el) {
       const scrollY = el.getBoundingClientRect().top + window.pageYOffset - navbarHeight - 20;
       window.scrollTo({ top: scrollY, behavior: 'smooth' });
-      // update hash after scroll
       window.history.replaceState(null, '', `#${id}`);
       setActiveSection(id);
     }
   };
 
-  // For setting active section on scroll
   useEffect(() => {
     const onScroll = () => {
       let current = 'home';
@@ -76,7 +71,6 @@ const Navbar = () => {
     };
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
-    // eslint-disable-next-line
   }, [navbarHeight]);
 
   return (
@@ -93,7 +87,6 @@ const Navbar = () => {
         }`}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-16 flex justify-between items-center">
-          {/* Logo Section */}
           <a
             href="#home"
             className="cursor-pointer flex items-center group"

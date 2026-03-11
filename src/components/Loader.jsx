@@ -6,7 +6,6 @@ const Loader = () => {
   const [loadingText, setLoadingText] = useState("Loading");
   const [isComplete, setIsComplete] = useState(false);
   
-  // Simulate loading progress
   useEffect(() => {
     const timer = setInterval(() => {
       setLoadingProgress((prev) => {
@@ -19,7 +18,6 @@ const Loader = () => {
       });
     }, 150);
 
-    // Animate the loading text with dots
     const textTimer = setInterval(() => {
       setLoadingText((prev) => {
         if (prev === "Loading...") return "Loading";

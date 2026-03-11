@@ -5,33 +5,27 @@ import { HiAcademicCap } from 'react-icons/hi';
 import { useRef } from 'react';
 
 const Education = () => {
-  // Create refs for different sections
   const sectionRef = useRef(null);
   const titleRef = useRef(null);
   const timelineRef = useRef(null);
   const achievementsSectionRef = useRef(null);
   
-  // Create arrays for refs before using them
   const educationRefs = useRef(Array(3).fill().map(() => useRef(null)));
   const achievementRefs = useRef(Array(5).fill().map(() => useRef(null)));
   
-  // Use inView to check visibility
   const isSectionInView = useInView(sectionRef, { once: false, amount: 0.1 });
   const isTitleInView = useInView(titleRef, { once: false, amount: 0.5 });
   const isTimelineInView = useInView(timelineRef, { once: false, amount: 0.2 });
   const isAchievementsInView = useInView(achievementsSectionRef, { once: false, amount: 0.2 });
   
-  // Check if individual education items are in view - safely
   const educationInView = educationRefs.current.map(ref => 
     useInView(ref, { once: false, amount: 0.2 })
   );
   
-  // Check if achievement items are in view - safely
   const achievementInView = achievementRefs.current.map(ref => 
     useInView(ref, { once: false, amount: 0.2 })
   );
 
-  // Animation variants
   const timelineVariants = {
     hidden: { height: 0 },
     visible: {
@@ -240,7 +234,6 @@ const Education = () => {
                                   alt={`${edu.institution} logo`}
                                   className="w-full h-full object-contain p-2"
                                   onError={(e) => {
-                                    // Fallback if logo doesn't load
                                     e.target.style.display = 'none';
                                     e.target.parentElement.innerHTML = `
                                       <span class="text-gray-500 text-xs text-center">

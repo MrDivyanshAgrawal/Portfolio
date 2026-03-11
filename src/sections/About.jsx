@@ -15,7 +15,6 @@ const About = () => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   
-  // Separate refs for different sections to control their individual animations
   const sectionRef = useRef(null);
   const titleRef = useRef(null);
   const infoRef = useRef(null);
@@ -24,7 +23,6 @@ const About = () => {
   const profileRef = useRef(null);
   const statsRef = useRef(null);
   
-  // Check if each section is in view
   const isSectionInView = useInView(sectionRef, { once: false, margin: "-100px 0px" });
   const isTitleInView = useInView(titleRef, { once: false, amount: 0.3 });
   const isInfoInView = useInView(infoRef, { once: false, amount: 0.3 });
@@ -64,7 +62,6 @@ const About = () => {
     },
   ];
 
-  // Platform links with larger icons
   const platformLinks = [
     {
       icon: <SiLeetcode size={26} />,
@@ -108,9 +105,7 @@ const About = () => {
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-          {/* Left Content */}
           <div className="space-y-6">
-            {/* Profile Image for Mobile */}
             <div className="lg:hidden mb-8">
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -126,7 +121,6 @@ const About = () => {
                 />
               </motion.div>
             </div>
-
             <motion.h3 
               initial={{ opacity: 0, y: 20 }}
               animate={isSectionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -192,8 +186,6 @@ const About = () => {
                 enhance my technical expertise to deliver better solutions.
               </motion.p>
             </div>
-
-            {/* Quote or Personal Touch */}
             <div ref={quoteRef}>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}

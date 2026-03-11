@@ -5,7 +5,6 @@ import { FaArrowUp } from 'react-icons/fa';
 const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
 
-  // Check if we've scrolled past the home section
   useEffect(() => {
     const homeSection = document.getElementById('home');
     
@@ -14,7 +13,6 @@ const ScrollToTop = () => {
         const homeBottom = homeSection.getBoundingClientRect().bottom;
         setIsVisible(homeBottom < 0);
       } else if (window.pageYOffset > 300) {
-        // Fallback if home section is not found
         setIsVisible(true);
       }
     };

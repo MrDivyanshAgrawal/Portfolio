@@ -1,10 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
-/* Fix section positioning relative to navbar */
 section {
-  padding-top: 5rem !important; /* Increased to account for navbar height */
-  scroll-margin-top: 5rem !important; /* This is crucial for proper scroll positioning */
+  padding-top: 5rem !important;
+  scroll-margin-top: 5rem !important;
 }
 
 @media (min-width: 768px) {
@@ -14,12 +13,10 @@ section {
   }
 }
 
-/* Adjust section title spacing */
 section [data-aos="fade-up"].text-center {
   margin-bottom: 2rem !important;
 }
 
-/* Base styles */
 @layer base {
   body {
     @apply bg-black;
@@ -42,7 +39,6 @@ section [data-aos="fade-up"].text-center {
 
 /* Component styles */
 @layer components {
-  .btn-primary {
     @apply px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg 
     hover:from-cyan-600 hover:to-blue-700 transform hover:-translate-y-1 transition-all 
     duration-300 font-medium shadow-lg;

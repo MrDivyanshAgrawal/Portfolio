@@ -9,13 +9,11 @@ const Projects = () => {
   const gridRef = useRef(null);
   const buttonRef = useRef(null);
 
-  // Use multiple refs with useInView for more granular control
   const isSectionInView = useInView(sectionRef, { amount: 0.1 });
   const isTitleInView = useInView(titleRef, { amount: 0.5 });
   const isGridInView = useInView(gridRef, { amount: 0.1 });
   const isButtonInView = useInView(buttonRef, { amount: 0.5 });
 
-  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -184,7 +182,7 @@ const Projects = () => {
   return (
     <section id="projects" ref={sectionRef} className="relative py-20 md:py-32">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-20 2xl:px-32">
-        {/* Section Title with animation */}
+
         <div ref={titleRef} className="text-center mb-16">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -216,7 +214,7 @@ const Projects = () => {
           </motion.p>
         </div>
 
-        {/* Projects Grid */}
+
         <div
           ref={gridRef}
           className="grid grid-cols-1 xl:grid-cols-2 gap-8 max-w-7xl mx-auto"
@@ -247,7 +245,7 @@ const Projects = () => {
           ))}
         </div>
 
-        {/* GitHub Link */}
+
         <div ref={buttonRef} className="text-center mt-16">
           <motion.a
             initial={{ opacity: 0, y: 20 }}
@@ -271,7 +269,6 @@ const Projects = () => {
         </div>
       </div>
 
-      {/* Background decorations with animation */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={

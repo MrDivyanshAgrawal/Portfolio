@@ -8,7 +8,6 @@ const ProjectCard = ({ project, index }) => {
   const cardRef = useRef(null);
   const isInView = useInView(cardRef, { once: false, amount: 0.2 });
 
-  // Card animation variants
   const cardVariants = {
     hidden: { opacity: 0, y: 30 },
     visible: { 
@@ -18,7 +17,6 @@ const ProjectCard = ({ project, index }) => {
     }
   };
 
-  // Technology tag animation variants
   const tagVariants = {
     hidden: { opacity: 0, scale: 0.8, y: 10 },
     visible: (i) => ({
@@ -43,7 +41,7 @@ const ProjectCard = ({ project, index }) => {
       whileHover={{ scale: 1.02 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="relative group h-full" // Added h-full for full height
+      className="relative group h-full"
     >
       <motion.div
         initial={{ boxShadow: "0 0 0 rgba(6, 182, 212, 0)" }}
@@ -54,10 +52,9 @@ const ProjectCard = ({ project, index }) => {
         transition={{ duration: 0.3 }}
         className="relative bg-gray-800/50 backdrop-blur-sm rounded-xl overflow-hidden
                 border border-gray-700 hover:border-cyan-400/50
-                transition-all duration-300 h-full flex flex-col" // Added flex-col to enable flex child stretching
+                transition-all duration-300 h-full flex flex-col"
       >
-        {/* Project Image with Error Handling */}
-        <div className="relative h-48 md:h-56 overflow-hidden flex-shrink-0"> {/* Added flex-shrink-0 to prevent image from shrinking */}
+        <div className="relative h-48 md:h-56 overflow-hidden flex-shrink-0">
           <motion.img
             src={project.image || null}
             alt={project.title}
@@ -68,8 +65,6 @@ const ProjectCard = ({ project, index }) => {
               e.target.src = null;
             }}
           />
-          
-          {/* Overlay with Links */}
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: isHovered ? 1 : 0 }}
@@ -112,8 +107,7 @@ const ProjectCard = ({ project, index }) => {
           </motion.div>
         </div>
 
-        {/* Project Content */}
-        <div className="p-6 flex-1 flex flex-col"> {/* Added flex-1 and flex-col to fill available space */}
+        <div className="p-6 flex-1 flex flex-col">
           <div className="flex items-start justify-between mb-3">
             <motion.h3
               initial={{ opacity: 0, x: -10 }}
@@ -124,7 +118,6 @@ const ProjectCard = ({ project, index }) => {
             >
               {project.title}
             </motion.h3>
-            {/* Live indicator */}
             {project.demo && (
               <motion.span 
                 initial={{ scale: 0, opacity: 0 }}
@@ -136,7 +129,7 @@ const ProjectCard = ({ project, index }) => {
                   delay: index * 0.1 + 0.4
                 }}
                 className="flex items-center gap-1 text-xs text-green-400 bg-green-400/10 
-                           px-2 py-1 rounded-full whitespace-nowrap flex-shrink-0" // Added flex-shrink-0
+                           px-2 py-1 rounded-full whitespace-nowrap flex-shrink-0"
               >
                 <motion.span 
                   animate={{ scale: [1, 1.5, 1] }}

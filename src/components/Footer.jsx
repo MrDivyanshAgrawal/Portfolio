@@ -36,7 +36,6 @@ const Footer = () => {
         setIsVisible(entry.isIntersecting);
         
         if (entry.isIntersecting) {
-          // Small delay to ensure component is mounted
           const timer = setTimeout(() => {
             controls.start("visible");
           }, 10);

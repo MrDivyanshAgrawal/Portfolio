@@ -1,17 +1,3 @@
-// src/components/Icons.jsx
-import { 
-  FiGithub, 
-  FiLinkedin, 
-  FiMail, 
-  FiPhone, 
-  FiCode, 
-  FiServer, 
-  FiDatabase, 
-  FiSettings,
-  FiGlobe,
-  FiPackage,
-} from 'react-icons/fi';
-
 import {
   FaReact,
   FaNodeJs,
@@ -19,13 +5,11 @@ import {
   FaCss3Alt,
   FaPython,
   FaJs,
-  FaGithub,
-  FaDatabase,
   FaBootstrap,
-  FaInstagram,
+  FaGithub,
   FaGitAlt,
-  FaDocker
-} from 'react-icons/fa';
+  FaDocker,
+} from "react-icons/fa";
 
 import {
   SiExpress,
@@ -33,7 +17,6 @@ import {
   SiTailwindcss,
   SiRedis,
   SiSocketdotio,
-  // Removed SiVisualstudio - it doesn't exist
   SiPostman,
   SiFramer,
   SiJquery,
@@ -45,30 +28,20 @@ import {
   SiMysql,
   SiCplusplus,
   SiC,
-  SiLeetcode,
-  SiCodechef,
-  SiGeeksforgeeks,
-  SiCloudinary, 
-  SiStripe
-} from 'react-icons/si';
+  SiCloudinary,
+  SiStripe,
+  SiNumpy,
+  SiPandas,
+  SiScikitlearn,
+  SiStreamlit,
+  SiJupyter,
+} from "react-icons/si";
 
-import { BiCodeAlt, BiCodeBlock } from 'react-icons/bi';
-import { TbApi } from 'react-icons/tb';
-import { VscCode } from 'react-icons/vsc'; // VS Code icon
-
-export const socialIcons = {
-  github: <FiGithub />,
-  linkedin: <FiLinkedin />,
-  email: <FiMail />,
-  phone: <FiPhone />,
-  website: <FiGlobe />,
-  instagram: <FaInstagram />,
-  leetcode: <SiLeetcode />,
-  codechef: <SiCodechef />
-};
+import { TbApi } from "react-icons/tb";
+import { BiCodeAlt, BiCodeBlock } from "react-icons/bi";
+import { VscCode } from "react-icons/vsc";
 
 export const techIcons = {
-  // Frontend
   react: <FaReact className="text-cyan-400" />,
   javascript: <FaJs className="text-yellow-400" />,
   html: <FaHtml5 className="text-orange-500" />,
@@ -79,8 +52,7 @@ export const techIcons = {
   jquery: <SiJquery className="text-blue-600" />,
   framer: <SiFramer className="text-pink-400" />,
   vite: <SiVite className="text-purple-400" />,
-  
-  // Backend
+
   node: <FaNodeJs className="text-green-500" />,
   express: <SiExpress className="text-gray-400" />,
   mongodb: <SiMongodb className="text-green-500" />,
@@ -91,36 +63,26 @@ export const techIcons = {
   api: <TbApi className="text-cyan-400" />,
   cloudinary: <SiCloudinary className="text-blue-400" />,
   stripe: <SiStripe className="text-purple-500" />,
-  
-  // Programming Languages
+
   cpp: <SiCplusplus className="text-blue-500" />,
   c: <SiC className="text-blue-600" />,
   python: <FaPython className="text-yellow-400" />,
   dsa: <BiCodeBlock className="text-purple-400" />,
   algorithm: <BiCodeAlt className="text-green-400" />,
-  
-  // Tools & Deployment
+
+  numpy: <SiNumpy className="text-blue-400" />,
+  pandas: <SiPandas className="text-purple-400" />,
+  sklearn: <SiScikitlearn className="text-orange-400" />,
+  streamlit: <SiStreamlit className="text-red-400" />,
+  jupyter: <SiJupyter className="text-orange-500" />,
+
   git: <FaGitAlt className="text-orange-500" />,
   github: <FaGithub className="text-white" />,
-  vscode: <VscCode className="text-blue-500" />, // Using VscCode
+  vscode: <VscCode className="text-blue-500" />,
   postman: <SiPostman className="text-orange-500" />,
   vercel: <SiVercel className="text-white" />,
   render: <SiRender className="text-teal-400" />,
   docker: <FaDocker className="text-blue-400" />,
-  
-  // Competitive Programming
-  leetcode: <SiLeetcode className="text-yellow-500" />,
-  codechef: <SiCodechef className="text-amber-600" />,
-  geeksforgeeks: <SiGeeksforgeeks className="text-green-600" />
 };
 
-// Additional icons that might be useful
-export const categoryIcons = {
-  frontend: <FiCode className="text-cyan-400" />,
-  backend: <FiServer className="text-green-400" />,
-  database: <FiDatabase className="text-blue-400" />,
-  tools: <FiSettings className="text-purple-400" />,
-  deployment: <FiPackage className="text-orange-400" />
-};
-
-export default { socialIcons, techIcons, categoryIcons };
+export default techIcons;
