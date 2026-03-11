@@ -1,39 +1,43 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
+/* Section positioning for navbar offset */
 section {
-  padding-top: 5rem !important;
-  scroll-margin-top: 5rem !important;
+  padding-top: 5rem;
+  scroll-margin-top: 5rem;
 }
 
 @media (min-width: 768px) {
   section {
-    padding-top: 4rem !important;
-    scroll-margin-top: 2rem !important;
+    padding-top: 4rem;
+    scroll-margin-top: 2rem;
   }
 }
 
+/* Section title spacing */
 section [data-aos="fade-up"].text-center {
-  margin-bottom: 2rem !important;
+  margin-bottom: 2rem;
 }
 
+/* Base styles */
 @layer base {
+  html {
+    scroll-behavior: smooth;
+    height: 100%;
+    overflow-x: hidden;
+    scrollbar-width: auto;
+    scrollbar-color: #06b6d4 #0f172a;
+  }
+
   body {
     @apply bg-black;
     font-family: 'Poppins', sans-serif;
     overflow-x: hidden;
   }
-  
-  html {
-    scroll-behavior: smooth !important;
-    height: 100%;
-    overflow-x: hidden;
-  }
-  
+
   #root {
-    position: relative;
     min-height: 100vh;
-    overflow-x: hidden;
+    position: relative;
   }
 }
 
@@ -44,17 +48,17 @@ section [data-aos="fade-up"].text-center {
     hover:from-cyan-600 hover:to-blue-700 transform hover:-translate-y-1 transition-all 
     duration-300 font-medium shadow-lg;
   }
-  
+
   .btn-outline {
     @apply px-6 py-3 border-2 border-cyan-500 text-cyan-400 rounded-lg 
     hover:border-cyan-400 hover:bg-cyan-900/20 transform hover:-translate-y-1 
     transition-all duration-300 font-medium;
   }
-  
+
   .section-heading {
     @apply text-3xl md:text-4xl font-bold mb-8 text-white relative pb-4 inline-block;
   }
-  
+
   .card {
     @apply rounded-xl bg-gray-800/60 border border-gray-700 p-6 backdrop-blur-sm
     hover:border-cyan-700 transition-all duration-300 shadow-lg;
@@ -65,7 +69,7 @@ section [data-aos="fade-up"].text-center {
   }
 }
 
-/* Section heading after element */
+/* Section heading underline */
 .section-heading::after {
   content: '';
   position: absolute;
@@ -79,7 +83,7 @@ section [data-aos="fade-up"].text-center {
   border-radius: 9999px;
 }
 
-/* Button shadows */
+/* Shadows */
 .btn-primary {
   box-shadow: 0 10px 15px -3px rgba(6, 182, 212, 0.2);
 }
@@ -88,34 +92,33 @@ section [data-aos="fade-up"].text-center {
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
 }
 
-/* Additional custom styles */
+/* Utility styles */
 @layer utilities {
   .animate-drift {
     animation: drift 20s infinite;
   }
-  
-  /* Custom scroll behavior for skill cards */
+
+  /* Skill horizontal scroll */
   .skill-scroll {
-    scroll-behavior: auto;
     scroll-snap-type: x mandatory;
   }
-  
+
   .skill-card {
     scroll-snap-align: start;
   }
+
+  /* Hide scrollbar */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
 
-/* Scrollbar hide utility */
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-/* Animation for particles */
+/* Particle animation */
 @keyframes float {
   0% {
     transform: translateY(0) rotate(0deg);
@@ -132,9 +135,10 @@ section [data-aos="fade-up"].text-center {
   border-radius: 50%;
   opacity: 0.5;
   pointer-events: none;
+  will-change: transform;
 }
 
-/* Custom Scrollbar Styles - Improved width */
+/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 14px;
   height: 14px;
@@ -155,15 +159,9 @@ section [data-aos="fade-up"].text-center {
   background: linear-gradient(to bottom, rgb(6, 182, 212), rgb(59, 130, 246));
 }
 
-/* Firefox */
-html {
-  scrollbar-width: auto;
-  scrollbar-color: #06b6d4 #0f172a;
-}
-
-/* Keyframes */
+/* Drift animation */
 @keyframes drift {
-  0% { transform: translate(0, 0); }
-  50% { transform: translate(-10px, -10px); }
-  100% { transform: translate(0, 0); }
+  0% { transform: translate(0,0); }
+  50% { transform: translate(-10px,-10px); }
+  100% { transform: translate(0,0); }
 }
