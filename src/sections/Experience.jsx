@@ -3,18 +3,18 @@ import { FiBriefcase, FiCalendar, FiAward, FiTrendingUp } from 'react-icons/fi';
 import { useRef } from 'react';
 
 const timelineDotVariants = {
-    hidden: { scale: 0, opacity: 0 },
-    visible: {
-      scale: 1,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        stiffness: 300,
-        damping: 15,
-        duration: 0.5
-      }
+  hidden: { scale: 0, opacity: 0 },
+  visible: {
+    scale: 1,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      stiffness: 300,
+      damping: 15,
+      duration: 0.5
     }
-  };
+  }
+};
 
 const cardVariants = {
   hidden: { opacity: 0, scale: 0.95 },
@@ -28,133 +28,114 @@ const cardVariants = {
   }
 };
 
-const ExperienceItem = ({ exp, index }) => {
+const ExperienceItem = ({ exp }) => {
   const itemRef = useRef(null);
   const isInView = useInView(itemRef, { once: true, amount: 0.3 });
 
   return (
-    <div
-      ref={itemRef}
-      className={`relative ${index % 2 === 0 ? 'lg:pr-8' : 'lg:pl-8'}`}
-    >
-      <div className={`lg:grid lg:grid-cols-2 lg:gap-8 
-                    ${index % 2 === 0 ? '' : 'lg:flex-row-reverse'}`}>
-        <motion.div 
-          variants={timelineDotVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className={`absolute top-8 bg-gray-900 p-3 rounded-full 
-                      border-4 border-cyan-400 shadow-lg shadow-cyan-400/20
-                      ${index % 2 === 0 
-                        ? 'left-4 lg:left-1/2 lg:-translate-x-1/2' 
-                        : 'left-4 lg:left-1/2 lg:-translate-x-1/2'}`}
-        >
-          <FiBriefcase className="text-cyan-400 text-xl" />
-        </motion.div>
-        
-        <div
-          className={`ml-20 lg:ml-0 ${index % 2 === 0 ? 'lg:text-right' : ''}`}
-        >
+    <motion.div ref={itemRef} className="relative flex w-full flex-col items-center">
+      <motion.div
+        variants={timelineDotVariants}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+        className="relative z-10 mb-6 bg-gray-900 p-3 rounded-full border-4 border-cyan-400 shadow-lg shadow-cyan-400/20"
+      >
+        <FiBriefcase className="text-cyan-400 text-xl" />
+      </motion.div>
+
+      <motion.div
+        variants={cardVariants}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+        whileHover={{ scale: 1.02 }}
+        className="relative w-full max-w-3xl bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 lg:p-8
+                border border-gray-700 hover:border-cyan-400/50
+                transition-all duration-300 group text-center"
+      >
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileHover={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+          className="absolute inset-0 bg-gradient-to-br from-cyan-400/10 to-blue-500/10 rounded-xl"
+        />
+
+        <motion.div className="relative z-10">
           <motion.div
-            variants={cardVariants}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            whileHover={{ scale: 1.02 }}
-            className="relative bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 lg:p-8
-                    border border-gray-700 hover:border-cyan-400/50
-                    transition-all duration-300 group"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="flex flex-col items-center"
           >
-            <motion.div 
-              initial={{ opacity: 0 }}
-              whileHover={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
-              className="absolute inset-0 bg-gradient-to-br from-cyan-400/10 to-blue-500/10 
-                       rounded-xl"
-            />
-            
-            <div className="relative z-10">
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className={`flex flex-col ${index % 2 === 0 ? 'lg:items-end' : ''}`}
-              >
-                <h3 className="text-2xl font-bold text-white mb-2">{exp.title}</h3>
-                <p className="text-cyan-400 font-medium text-lg mb-1">{exp.role}</p>
-                <div className="flex items-center gap-2 text-gray-400 text-sm">
-                  <FiCalendar />
-                  <span>{exp.date}</span>
-                </div>
-              </motion.div>
-              
-              {exp.achievements && (
-                <div className={`flex flex-wrap gap-3 mt-4 ${index % 2 === 0 ? 'lg:justify-end' : ''}`}>
-                  {exp.achievements.map((achievement, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={isInView ? 
-                        { opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.3 + i * 0.1 } } : 
-                        { opacity: 0, y: 20 }
-                      }
-                      whileHover={{ scale: 1.1, y: -3 }}
-                      className="flex items-center gap-2 px-3 py-1.5 bg-cyan-400/10 
-                             rounded-full border border-cyan-400/30"
-                    >
-                      <span className="text-cyan-400">{achievement.icon}</span>
-                      <span className="text-sm text-cyan-300">{achievement.text}</span>
-                    </motion.div>
-                  ))}
-                </div>
-              )}
-              
-              <div className="mt-6 space-y-3">
-                {exp.description.map((desc, i) => (
-                  <motion.p
-                    key={i}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={isInView ? 
-                      { opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.4 + i * 0.1 } } : 
-                      { opacity: 0, y: 20 }
-                    }
-                    className="text-gray-300 leading-relaxed"
-                  >
-                    {desc}
-                  </motion.p>
-                ))}
-              </div>
-              
-              <div 
-                className={`mt-6 flex flex-wrap gap-2 ${index % 2 === 0 ? 'lg:justify-end' : ''}`}
-              >
-                {exp.skills.map((skill, i) => (
-                  <motion.span 
-                    key={i}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={isInView ? 
-                      { opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.5 + i * 0.1 } } : 
-                      { opacity: 0, y: 20 }
-                    }
-                    whileHover={{ 
-                      scale: 1.05, 
-                      color: "rgb(34, 211, 238)", 
-                      borderColor: "rgba(34, 211, 238, 0.5)" 
-                    }}
-                    className="px-4 py-2 bg-gray-700/50 text-gray-300 rounded-lg text-sm
-                           border border-gray-600 hover:border-cyan-400/50 hover:text-cyan-400
-                           transition-all duration-300"
-                  >
-                    {skill}
-                  </motion.span>
-                ))}
-              </div>
+            <h3 className="text-2xl font-bold text-white mb-2">{exp.title}</h3>
+            <p className="text-cyan-400 font-medium text-lg mb-1">{exp.role}</p>
+            <div className="flex items-center justify-center gap-2 text-gray-400 text-sm">
+              <FiCalendar />
+              <span>{exp.date}</span>
             </div>
           </motion.div>
-        </div>
-        
-        <div className="hidden lg:block" />
-      </div>
-    </div>
+
+          {exp.achievements && (
+            <motion.div className="flex flex-wrap justify-center gap-3 mt-4">
+              {exp.achievements.map((achievement, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isInView ?
+                    { opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.3 + i * 0.1 } } :
+                    { opacity: 0, y: 20 }
+                  }
+                  whileHover={{ scale: 1.1, y: -3 }}
+                  className="flex items-center gap-2 px-3 py-1.5 bg-cyan-400/10
+                         rounded-full border border-cyan-400/30"
+                >
+                  <span className="text-cyan-400">{achievement.icon}</span>
+                  <span className="text-sm text-cyan-300">{achievement.text}</span>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
+
+          <motion.div className="mt-6 space-y-3">
+            {exp.description.map((desc, i) => (
+              <motion.p
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ?
+                  { opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.4 + i * 0.1 } } :
+                  { opacity: 0, y: 20 }
+                }
+                className="text-gray-300 leading-relaxed"
+              >
+                {desc}
+              </motion.p>
+            ))}
+          </motion.div>
+
+          <motion.div className="mt-6 flex flex-wrap justify-center gap-2">
+            {exp.skills.map((skill, i) => (
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ?
+                  { opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.5 + i * 0.1 } } :
+                  { opacity: 0, y: 20 }
+                }
+                whileHover={{
+                  scale: 1.05,
+                  color: "rgb(34, 211, 238)",
+                  borderColor: "rgba(34, 211, 238, 0.5)"
+                }}
+                className="px-4 py-2 bg-gray-700/50 text-gray-300 rounded-lg text-sm
+                       border border-gray-600 hover:border-cyan-400/50 hover:text-cyan-400
+                       transition-all duration-300"
+              >
+                {skill}
+              </motion.span>
+            ))}
+          </motion.div>
+        </motion.div>
+      </motion.div>
+    </motion.div>
   );
 };
 
@@ -163,7 +144,7 @@ const Experience = () => {
   const titleRef = useRef(null);
   const timelineRef = useRef(null);
   const messageRef = useRef(null);
-  
+
   const isSectionInView = useInView(sectionRef, { amount: 0.1 });
   const isTitleInView = useInView(titleRef, { amount: 0.5 });
   const isTimelineInView = useInView(timelineRef, { amount: 0.3 });
@@ -201,60 +182,50 @@ const Experience = () => {
       ]
     }
   ];
-  
+
   return (
-    <section 
-      id="experience" 
+    <section
+      id="experience"
       ref={sectionRef}
       className="relative py-20 md:py-32 overflow-hidden"
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-32">
+      <motion.div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-32">
 
-        <div ref={titleRef} className="text-center mb-16">
+        <motion.div ref={titleRef} className="text-center mb-16">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={isTitleInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.7 }}
-            className="text-3xl md:text-4xl lg:text-5xl font-bold text-transparent 
+            className="text-3xl md:text-4xl lg:text-5xl font-bold text-transparent
                      bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 mb-4"
           >
             Experience
           </motion.h2>
-          <motion.div 
+          <motion.div
             initial={{ width: 0 }}
             animate={isTitleInView ? { width: "6rem" } : { width: 0 }}
             transition={{ duration: 0.8 }}
             className="h-1 bg-gradient-to-r from-cyan-400 to-blue-500 mx-auto"
           />
-        </div>
-        
-        <div ref={timelineRef} className="relative">
+        </motion.div>
 
-          <motion.div 
-            initial={{ height: 0, opacity: 0 }}
-            animate={isTimelineInView ? { height: "100%", opacity: 1 } : { height: 0, opacity: 0 }}
-            transition={{ duration: 1.5 }}
-            className="absolute left-1/2 transform -translate-x-1/2 w-0.5 
-                    bg-gradient-to-b from-cyan-400/50 to-transparent hidden lg:block"
-          />
-          
+        <motion.div ref={timelineRef} className="relative mx-auto max-w-4xl">
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={isTimelineInView ? { height: "100%", opacity: 1 } : { height: 0, opacity: 0 }}
             transition={{ duration: 1.5 }}
-            className="absolute left-8 w-0.5 bg-gradient-to-b 
-                    from-cyan-400/50 to-transparent lg:hidden"
+            className="absolute left-1/2 top-0 bottom-0 w-0.5 -translate-x-1/2
+                    bg-gradient-to-b from-cyan-400/50 via-cyan-400/30 to-transparent"
           />
-          
-          <div className="space-y-12">
+
+          <motion.div className="relative flex flex-col items-center gap-16 md:gap-20">
             {experiences.map((exp, index) => (
-              <ExperienceItem key={index} exp={exp} index={index} />
+              <ExperienceItem key={index} exp={exp} />
             ))}
-          </div>
-        </div>
-        
-        {/* Add more experiences prompt */}
-        <div ref={messageRef}>
+          </motion.div>
+        </motion.div>
+
+        <motion.div ref={messageRef}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isMessageInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -265,22 +236,22 @@ const Experience = () => {
               More experiences coming soon...
             </p>
           </motion.div>
-        </div>
-      
-      </div>
-      {/* Background decoration with animation */}
-      <motion.div 
+        </motion.div>
+
+      </motion.div>
+
+      <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={isSectionInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
         transition={{ duration: 1.2 }}
-        className="absolute top-1/2 right-0 transform translate-x-1/2 -translate-y-1/2 
+        className="absolute top-1/2 right-0 transform translate-x-1/2 -translate-y-1/2
                 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl -z-10"
       />
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={isSectionInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
         transition={{ duration: 1.2, delay: 0.3 }}
-        className="absolute bottom-0 left-0 transform -translate-x-1/2 
+        className="absolute bottom-0 left-0 transform -translate-x-1/2
                 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl -z-10"
       />
     </section>
