@@ -6,17 +6,13 @@ const Experience = () => {
   const sectionRef = useRef(null);
   const titleRef = useRef(null);
   const timelineRef = useRef(null);
-  const contentRef = useRef(null);
   const messageRef = useRef(null);
-  
   const experienceRef = useRef(null);
   
   const isSectionInView = useInView(sectionRef, { amount: 0.1 });
   const isTitleInView = useInView(titleRef, { amount: 0.5 });
   const isTimelineInView = useInView(timelineRef, { amount: 0.3 });
-  const isContentInView = useInView(contentRef, { amount: 0.2 });
   const isMessageInView = useInView(messageRef, { amount: 0.5 });
-  
   const isExperienceInView = useInView(experienceRef, { amount: 0.3 });
 
   const timelineDotVariants = {
@@ -46,6 +42,22 @@ const Experience = () => {
   };
 
   const experiences = [
+    {
+      title: "YogLabs AI Research Foundation",
+      role: "Software Development Engineer Intern · Remote",
+      date: "Mar 2026 – Present",
+      description: [
+        "Built an agentic information extraction pipeline using Python, LangGraph, OpenAI APIs, and BeautifulSoup to process 100+ research web pages into structured knowledge graphs.",
+        "Developed schema-first extraction workflows with LLM-based classification, entity linking, and fallback-safe parsing across 3 core entity collections.",
+        "Integrated the pipeline into a scalable microservices architecture using Flask, MongoDB, Docker, and REST APIs supporting asynchronous worker-based workflows.",
+        "Designed idempotent MongoDB upserts and normalized deduplication logic, reducing duplicate entity generation during repeated crawls by 35%."
+      ],
+      skills: ["Python", "LangGraph", "OpenAI APIs", "Flask", "MongoDB", "Docker", "REST APIs"],
+      achievements: [
+        { icon: <FiTrendingUp />, text: "40% extraction consistency improvement" },
+        { icon: <FiTrendingUp />, text: "35% fewer duplicate entities" }
+      ]
+    },
     {
       title: "HacktheChain 2.0 – IIIT Kota",
       role: "Team Express Emergency Engineers",
@@ -106,7 +118,7 @@ const Experience = () => {
                     from-cyan-400/50 to-transparent lg:hidden"
           />
           
-          <div ref={contentRef} className="space-y-12">
+          <div className="space-y-12">
             {experiences.map((exp, index) => (
               <div 
                 key={index}
@@ -256,8 +268,8 @@ const Experience = () => {
             </p>
           </motion.div>
         </div>
-      </div>
       
+      </div>
       {/* Background decoration with animation */}
       <motion.div 
         initial={{ opacity: 0, scale: 0.8 }}

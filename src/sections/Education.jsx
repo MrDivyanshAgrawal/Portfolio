@@ -54,9 +54,9 @@ const Education = () => {
     {
       type: "university",
       institution: "Indian Institute of Information Technology, Kota",
-      degree: "Bachelor of Technology in Computer Science",
-      duration: "Nov 2022 - Present",
-      grade: "CGPA: 8.79 (Till 6th Semester)",
+      degree: "Bachelor of Technology in Computer Science and Engineering",
+      duration: "Nov 2022 - Jun 2026",
+      grade: "CGPA: 8.79/10",
       icon: <FaUniversity className="text-cyan-400 text-xl" />,
       logo: "/Education/college.png",
       highlights: ["Strong foundation in Computer Science", "Active participant in coding competitions"],

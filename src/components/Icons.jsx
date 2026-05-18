@@ -24,7 +24,9 @@ import {
   FaBootstrap,
   FaInstagram,
   FaGitAlt,
-  FaDocker
+  FaDocker,
+  FaJava,
+  FaAws
 } from 'react-icons/fa';
 
 import {
@@ -49,7 +51,10 @@ import {
   SiCodechef,
   SiGeeksforgeeks,
   SiCloudinary, 
-  SiStripe
+  SiStripe,
+  SiFlask,
+  SiNumpy,
+  SiPandas
 } from 'react-icons/si';
 
 import { BiCodeAlt, BiCodeBlock } from 'react-icons/bi';
@@ -91,11 +96,14 @@ export const techIcons = {
   api: <TbApi className="text-cyan-400" />,
   cloudinary: <SiCloudinary className="text-blue-400" />,
   stripe: <SiStripe className="text-purple-500" />,
+  flask: <SiFlask className="text-gray-300" />,
   
   // Programming Languages
   cpp: <SiCplusplus className="text-blue-500" />,
   c: <SiC className="text-blue-600" />,
   python: <FaPython className="text-yellow-400" />,
+  java: <FaJava className="text-red-500" />,
+  sql: <FaDatabase className="text-blue-400" />,
   dsa: <BiCodeBlock className="text-purple-400" />,
   algorithm: <BiCodeAlt className="text-green-400" />,
   
@@ -107,6 +115,10 @@ export const techIcons = {
   vercel: <SiVercel className="text-white" />,
   render: <SiRender className="text-teal-400" />,
   docker: <FaDocker className="text-blue-400" />,
+  aws: <FaAws className="text-orange-400" />,
+  langgraph: <FiCode className="text-cyan-400" />,
+  numpy: <SiNumpy className="text-blue-500" />,
+  pandas: <SiPandas className="text-indigo-400" />,
   
   // Competitive Programming
   leetcode: <SiLeetcode className="text-yellow-500" />,

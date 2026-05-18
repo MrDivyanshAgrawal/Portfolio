@@ -67,6 +67,7 @@ const Skills = () => {
       skills: [
         { name: "Node.js", icon: "node" },
         { name: "Express.js", icon: "express" },
+        { name: "Flask", icon: "flask" },
         { name: "MongoDB", icon: "mongodb" },
         { name: "MySQL", icon: "mysql" },
         { name: "Socket.IO", icon: "socketio" },
@@ -85,6 +86,8 @@ const Skills = () => {
         { name: "C", icon: "c" },
         { name: "Python", icon: "python" },
         { name: "JavaScript", icon: "javascript" },
+        { name: "Java", icon: "java" },
+        { name: "SQL", icon: "sql" },
         { name: "Data Structures", icon: "dsa" },
         { name: "Algorithms", icon: "algorithm" },
       ]
@@ -95,6 +98,10 @@ const Skills = () => {
       skills: [
         { name: "Git", icon: "git" },
         { name: "GitHub", icon: "github" },
+        { name: "AWS", icon: "aws" },
+        { name: "LangGraph", icon: "langgraph" },
+        { name: "NumPy", icon: "numpy" },
+        { name: "Pandas", icon: "pandas" },
         { name: "VS Code", icon: "vscode" },
         { name: "Postman", icon: "postman" },
         { name: "Vercel", icon: "vercel" },
