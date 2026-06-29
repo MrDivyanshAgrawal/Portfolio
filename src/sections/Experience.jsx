@@ -95,21 +95,22 @@ const ExperienceItem = ({ exp }) => {
             </motion.div>
           )}
 
-          <motion.div className="mt-6 space-y-3">
+          <ul className="mt-6 space-y-3 text-left list-none">
             {exp.description.map((desc, i) => (
-              <motion.p
+              <motion.li
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ?
                   { opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.4 + i * 0.1 } } :
                   { opacity: 0, y: 20 }
                 }
-                className="text-gray-300 leading-relaxed"
+                className="flex gap-3 text-gray-300 leading-relaxed"
               >
-                {desc}
-              </motion.p>
+                <span className="text-cyan-400 font-bold mt-0.5 flex-shrink-0">•</span>
+                <span>{desc}</span>
+              </motion.li>
             ))}
-          </motion.div>
+          </ul>
 
           <motion.div className="mt-6 flex flex-wrap justify-center gap-2">
             {exp.skills.map((skill, i) => (
@@ -156,24 +157,43 @@ const Experience = () => {
       role: "Software Development Engineer Intern · Remote",
       date: "Mar 2026 – Present",
       description: [
-        "Built an agentic information extraction pipeline using Python, LangGraph, OpenAI APIs, and BeautifulSoup to process 100+ research web pages into structured knowledge graphs.",
-        "Developed schema-first extraction workflows with LLM-based classification, entity linking, and fallback-safe parsing across 3 core entity collections.",
-        "Integrated the pipeline into a scalable microservices architecture using Flask, MongoDB, Docker, and REST APIs supporting asynchronous worker-based workflows.",
-        "Designed idempotent MongoDB upserts and normalized deduplication logic, reducing duplicate entity generation during repeated crawls by 35%."
+        "Built an agentic information extraction pipeline using Python, LangGraph, OpenAI APIs, and BeautifulSoup to convert 100+ research web pages into structured knowledge graphs.",
+        "Developed schema-first extraction workflows with LLM-based classification, entity linking, and fallback-safe parsing across people, projects, and publications.",
+        "Implemented internal-link web crawling, typed Pydantic schemas, and JSON-validated LLM outputs, improving extraction consistency across heterogeneous websites by 40%.",
+        "Integrated the pipeline into a microservices architecture using Flask, MongoDB, Docker, and REST APIs with asynchronous worker-based processing.",
+        "Architected idempotent MongoDB upserts and normalized deduplication logic, reducing duplicate entity generation during repeated crawls by 35%."
       ],
       skills: ["Python", "LangGraph", "OpenAI APIs", "Flask", "MongoDB", "Docker", "REST APIs"],
       achievements: [
-        { icon: <FiTrendingUp />, text: "40% extraction consistency improvement" },
+        { icon: <FiTrendingUp />, text: "40% extraction consistency gain" },
         { icon: <FiTrendingUp />, text: "35% fewer duplicate entities" }
       ]
     },
     {
+      title: "Xelron",
+      role: "Software Development Engineer Intern",
+      date: "Jul 2025 – Sept 2025",
+      description: [
+        "Authored Marlin V3 prompt preparation guides and evaluation runbooks defining multi-turn PR trajectory workflows, acceptance criteria, and submission standards.",
+        "Designed LLM evaluation workflows with validation gates to compare model responses against edge cases and measurable deliverables before team review.",
+        "Corrected TerminalBench task packages by fixing Docker environments, oracle solutions, test verifiers, and dependencies while preserving original task intent.",
+        "Documented grammar, formatting, and cross-verification rules for high-quality training prompts, improving consistency across team submissions."
+      ],
+      skills: ["Prompt Engineering", "LLM Evaluation", "Technical Documentation", "Docker", "GitHub", "QA Workflows"],
+      achievements: [
+        { icon: <FiAward />, text: "Internship completed successfully" },
+        { icon: <FiTrendingUp />, text: "Team workflow documentation" }
+      ]
+    },
+    {
       title: "HacktheChain 2.0 – IIIT Kota",
-      role: "Team Express Emergency Engineers",
+      role: "Full-Stack Developer · Team Express Emergency Engineers",
       date: "Feb 2024",
       description: [
-        "Developed a web-based Emergency Response System that reduced response times by 25%, and was recognized among the Top 10 of 40+ teams for innovation in crisis management.",
-        "Optimized system architecture and workflows, enhancing performance by 30%, which improved user navigation and efficiency of emergency handling."
+        "Architected a crisis response platform with real-time geolocation tracking that reduced emergency response time by 25%.",
+        "Built a mobile-first interface with responsive design patterns, achieving strong cross-device compatibility for field use.",
+        "Developed backend infrastructure to handle 200+ concurrent API requests while maintaining reliable uptime during peak load.",
+        "Recognized among the Top 10 teams out of 40+ for innovation in emergency management and system design."
       ],
       skills: ["Web Development", "System Architecture", "UX/UI Design", "Crisis Management"],
       achievements: [
@@ -233,7 +253,7 @@ const Experience = () => {
             className="text-center mt-16"
           >
             <p className="text-gray-400 text-lg">
-              More experiences coming soon...
+              More on the way…
             </p>
           </motion.div>
         </motion.div>

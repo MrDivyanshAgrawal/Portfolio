@@ -200,7 +200,7 @@ const Hero = () => {
               </motion.button>
               
               <motion.a
-                href="/Divyansh_Agrawal_Resume.pdf"
+                href="/DIVYANSH_AGRAWAL_RESUME.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
