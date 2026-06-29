@@ -182,18 +182,15 @@ const Experience = () => {
       role: "Software Development Engineer Intern · Remote",
       date: "Mar 2026 – Present",
       location: "Remote",
-      summary: "Built and productionized an agentic extraction pipeline that turns research-lab websites into structured knowledge graphs inside a live microservices stack.",
+      summary: "Built and productionized an agentic extraction pipeline for research-lab websites into structured knowledge graphs.",
       description: [
         "Built an agentic information extraction pipeline using Python, LangGraph, OpenAI APIs, and BeautifulSoup to convert 100+ research web pages into structured knowledge graphs.",
-        "Developed schema-first extraction workflows with LLM-based classification, entity linking, and fallback-safe parsing across people, projects, and publications.",
         "Implemented internal-link web crawling, typed Pydantic schemas, and JSON-validated LLM outputs, improving extraction consistency across heterogeneous websites by 40%.",
-        "Integrated the pipeline into a microservices architecture using Flask, MongoDB, Docker, and REST APIs with asynchronous worker-based processing.",
-        "Architected idempotent MongoDB upserts and normalized deduplication logic, reducing duplicate entity generation during repeated crawls by 35%."
+        "Integrated the pipeline into a microservices architecture using Flask, MongoDB, Docker, and REST APIs with asynchronous worker-based processing."
       ],
       skills: ["Python", "LangGraph", "OpenAI APIs", "Flask", "MongoDB", "Docker", "REST APIs"],
       achievements: [
-        { icon: <FiTrendingUp />, text: "40% extraction consistency gain" },
-        { icon: <FiTrendingUp />, text: "35% fewer duplicate entities" }
+        { icon: <FiTrendingUp />, text: "40% extraction consistency gain" }
       ]
     },
     {
@@ -201,17 +198,15 @@ const Experience = () => {
       role: "Software Development Engineer Intern · Remote",
       date: "Jul 2025 – Sept 2025",
       location: "Remote",
-      summary: "Contributed to LLM evaluation workflows, prompt-engineering standards, and TerminalBench task corrections for production-grade AI training pipelines.",
+      summary: "Contributed to LLM evaluation workflows, prompt-engineering standards, and TerminalBench task corrections.",
       description: [
-        "Authored Marlin V3 prompt preparation guides and evaluation runbooks defining multi-turn PR trajectory workflows, acceptance criteria, and submission standards.",
-        "Designed LLM evaluation workflows with validation gates to compare model responses against edge cases and measurable deliverables before team review.",
-        "Corrected TerminalBench task packages by fixing Docker environments, oracle solutions, test verifiers, and dependencies while preserving original task intent.",
-        "Documented grammar, formatting, and cross-verification rules for high-quality training prompts, improving consistency across team submissions."
+        "Authored Marlin V3 prompt preparation guides and evaluation runbooks defining multi-turn PR trajectory workflows and submission standards.",
+        "Designed LLM evaluation workflows with validation gates to compare model responses against edge cases before team review.",
+        "Corrected TerminalBench task packages by fixing Docker environments, oracle solutions, test verifiers, and dependencies."
       ],
       skills: ["Prompt Engineering", "LLM Evaluation", "Technical Documentation", "Docker", "GitHub", "QA Workflows"],
       achievements: [
-        { icon: <FiAward />, text: "Internship completed successfully" },
-        { icon: <FiTrendingUp />, text: "Team workflow documentation" }
+        { icon: <FiAward />, text: "Internship completed successfully" }
       ]
     },
     {
