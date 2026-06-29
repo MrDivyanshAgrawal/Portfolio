@@ -1,11 +1,9 @@
 import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
-import { FaLinkedin, FaGithub, FaInstagram, FaEnvelope, FaChevronDown, FaHtml5, FaReact, FaFileAlt } from 'react-icons/fa';
-import { SiCplusplus } from 'react-icons/si';
+import { FaLinkedin, FaGithub, FaInstagram, FaEnvelope, FaChevronDown, FaPython, FaReact, FaNodeJs, FaFileAlt } from 'react-icons/fa';
 import { useEffect, useState, useRef } from 'react';
 
 const Hero = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const heroRef = useRef(null);
   const [isInView, setIsInView] = useState(false);
   const [windowWidth, setWindowWidth] = useState(typeof window !== "undefined" ? window.innerWidth : 0);
@@ -13,13 +11,6 @@ const Hero = () => {
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
-    };
-
-    const handleMouseMove = (e) => {
-      setMousePosition({
-        x: e.clientX,
-        y: e.clientY,
-      });
     };
 
     const handleIntersection = (entries) => {
@@ -37,10 +28,8 @@ const Hero = () => {
 
     handleResize();
     window.addEventListener("resize", handleResize);
-    window.addEventListener('mousemove', handleMouseMove);
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener("resize", handleResize);
       if (heroRef.current) {
         observer.unobserve(heroRef.current);
@@ -103,12 +92,8 @@ const Hero = () => {
 
   return (
     <div 
-      id="home"
       ref={heroRef}
-      className="relative w-full min-h-screen flex items-start justify-center overflow-hidden -mt-26" 
-      style={{ 
-        backgroundPosition: `calc(50% + ${mousePosition.x / 100}px) calc(50% + ${mousePosition.y / 100}px)` 
-      }}
+      className="relative w-full min-h-screen flex items-start justify-center overflow-hidden -mt-26"
     >
       {/* Animated background elements */}
       <div className="absolute inset-0 -z-10">
@@ -156,9 +141,11 @@ const Hero = () => {
                 sequence={[
                   "Full Stack Developer",
                   2000,
-                  "Competitive Programmer",
+                  "Software Developer",
                   2000,
-                  "DSA Enthusiast",
+                  "AI/ML Engineer",
+                  2000,
+                  "Competitive Programmer",
                   2000,
                   "Problem Solver",
                   2000,
@@ -177,9 +164,9 @@ const Hero = () => {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.7, duration: 0.7 }}
             >
-              Computer Science student at IIIT Kota with 8.79/10 CGPA and expertise in
-              full stack development. Skilled in React, Node.js, and C++. Ranked in top 6.03% on
-              LeetCode with 450+ algorithmic solutions and consistent problem-solving approach.
+              Computer Science student at IIIT Kota with 8.79/10 CGPA. Software developer building
+              agentic AI pipelines and full-stack products with React, Node.js, and Python.
+              LeetCode Knight in the top 6.02% globally with 450+ problems solved.
             </motion.p>
 
             <motion.div
@@ -210,7 +197,7 @@ const Hero = () => {
                        border-cyan-400 hover:bg-cyan-400/10 hover:shadow-lg 
                        hover:shadow-cyan-400/25 text-sm sm:text-base flex items-center"
               >
-                <FaFileAlt className="mr-2" /> Resume
+                <FaFileAlt className="mr-2" /> View Resume
               </motion.a>
             </motion.div>
 
@@ -268,7 +255,7 @@ const Hero = () => {
                 {/* Decorative Ring */}
                 <div className="absolute inset-0 border-8 border-cyan-500/10 rounded-full"></div>
 
-                {/* HTML Badge */}
+                {/* Python Badge */}
                 <motion.div
                   className="absolute rounded-xl z-20 backdrop-blur-md flex flex-col items-center justify-center overflow-hidden"
                   style={{
@@ -288,8 +275,8 @@ const Hero = () => {
                   }}
                   whileHover={{ scale: 1.1 }}
                 >
-                  <FaHtml5 className="text-white text-base sm:text-xl mb-1" />
-                  <span className="text-white font-medium" style={{ fontSize: badgePositions.textSize }}>HTML</span>
+                  <FaPython className="text-white text-base sm:text-xl mb-1" />
+                  <span className="text-white font-medium" style={{ fontSize: badgePositions.textSize }}>Python</span>
                 </motion.div>
 
                 {/* React Badge */}
@@ -316,7 +303,7 @@ const Hero = () => {
                   <span className="text-white font-medium" style={{ fontSize: badgePositions.textSize }}>React</span>
                 </motion.div>
 
-                {/* C++ Badge */}
+                {/* Node.js Badge */}
                 <motion.div
                   className="absolute rounded-xl z-20 backdrop-blur-md flex flex-col items-center justify-center overflow-hidden"
                   style={{
@@ -337,8 +324,8 @@ const Hero = () => {
                   }}
                   whileHover={{ scale: 1.1 }}
                 >
-                  <SiCplusplus className="text-white text-base sm:text-xl mb-1" />
-                  <span className="text-white font-medium" style={{ fontSize: badgePositions.textSize }}>C++</span>
+                  <FaNodeJs className="text-white text-base sm:text-xl mb-1" />
+                  <span className="text-white font-medium" style={{ fontSize: badgePositions.textSize }}>Node.js</span>
                 </motion.div>
               </div>
             </div>

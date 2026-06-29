@@ -1,5 +1,5 @@
 import { motion, useInView } from 'framer-motion';
-import { FiBriefcase, FiCalendar, FiAward, FiTrendingUp } from 'react-icons/fi';
+import { FiBriefcase, FiCalendar, FiAward, FiTrendingUp, FiMapPin, FiCheck } from 'react-icons/fi';
 import { useRef } from 'react';
 
 const timelineDotVariants = {
@@ -68,9 +68,17 @@ const ExperienceItem = ({ exp }) => {
           >
             <h3 className="text-2xl font-bold text-white mb-2">{exp.title}</h3>
             <p className="text-cyan-400 font-medium text-lg mb-1">{exp.role}</p>
-            <div className="flex items-center justify-center gap-2 text-gray-400 text-sm">
-              <FiCalendar />
-              <span>{exp.date}</span>
+            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-gray-400 text-sm">
+              <div className="flex items-center gap-2">
+                <FiCalendar />
+                <span>{exp.date}</span>
+              </div>
+              {exp.location && (
+                <div className="flex items-center gap-2">
+                  <FiMapPin />
+                  <span>{exp.location}</span>
+                </div>
+              )}
             </div>
           </motion.div>
 
@@ -95,7 +103,23 @@ const ExperienceItem = ({ exp }) => {
             </motion.div>
           )}
 
-          <ul className="mt-6 space-y-3 text-left list-none">
+          {exp.summary && (
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.5, delay: 0.35 }}
+              className="mt-6 text-gray-300 leading-relaxed text-left"
+            >
+              {exp.summary}
+            </motion.p>
+          )}
+
+          <div className="mt-6 text-left">
+            <h4 className="text-white text-xs font-semibold mb-2 flex items-center gap-1 justify-center sm:justify-start">
+              <FiAward className="text-cyan-400" />
+              Key Achievements
+            </h4>
+            <ul className="space-y-3 list-none">
             {exp.description.map((desc, i) => (
               <motion.li
                 key={i}
@@ -104,13 +128,14 @@ const ExperienceItem = ({ exp }) => {
                   { opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.4 + i * 0.1 } } :
                   { opacity: 0, y: 20 }
                 }
-                className="flex gap-3 text-gray-300 leading-relaxed"
+                className="flex gap-3 text-gray-300 leading-relaxed text-sm bg-gray-800/30 p-2 rounded-md border border-gray-700/50"
               >
-                <span className="text-cyan-400 font-bold mt-0.5 flex-shrink-0">•</span>
+                <FiCheck className="text-cyan-400 mt-1 flex-shrink-0" />
                 <span>{desc}</span>
               </motion.li>
             ))}
-          </ul>
+            </ul>
+          </div>
 
           <motion.div className="mt-6 flex flex-wrap justify-center gap-2">
             {exp.skills.map((skill, i) => (
@@ -156,6 +181,8 @@ const Experience = () => {
       title: "YogLabs AI Research Foundation",
       role: "Software Development Engineer Intern · Remote",
       date: "Mar 2026 – Present",
+      location: "Remote",
+      summary: "Built and productionized an agentic extraction pipeline that turns research-lab websites into structured knowledge graphs inside a live microservices stack.",
       description: [
         "Built an agentic information extraction pipeline using Python, LangGraph, OpenAI APIs, and BeautifulSoup to convert 100+ research web pages into structured knowledge graphs.",
         "Developed schema-first extraction workflows with LLM-based classification, entity linking, and fallback-safe parsing across people, projects, and publications.",
@@ -171,8 +198,10 @@ const Experience = () => {
     },
     {
       title: "Xelron",
-      role: "Software Development Engineer Intern",
+      role: "Software Development Engineer Intern · Remote",
       date: "Jul 2025 – Sept 2025",
+      location: "Remote",
+      summary: "Contributed to LLM evaluation workflows, prompt-engineering standards, and TerminalBench task corrections for production-grade AI training pipelines.",
       description: [
         "Authored Marlin V3 prompt preparation guides and evaluation runbooks defining multi-turn PR trajectory workflows, acceptance criteria, and submission standards.",
         "Designed LLM evaluation workflows with validation gates to compare model responses against edge cases and measurable deliverables before team review.",
@@ -189,6 +218,8 @@ const Experience = () => {
       title: "HacktheChain 2.0 – IIIT Kota",
       role: "Full-Stack Developer · Team Express Emergency Engineers",
       date: "Feb 2024",
+      location: "IIIT Kota",
+      summary: "Led development of an emergency response platform recognized among the Top 10 teams out of 40+ at a national hackathon.",
       description: [
         "Architected a crisis response platform with real-time geolocation tracking that reduced emergency response time by 25%.",
         "Built a mobile-first interface with responsive design patterns, achieving strong cross-device compatibility for field use.",
@@ -234,15 +265,15 @@ const Experience = () => {
             initial={{ height: 0, opacity: 0 }}
             animate={isTimelineInView ? { height: "100%", opacity: 1 } : { height: 0, opacity: 0 }}
             transition={{ duration: 1.5 }}
-            className="absolute left-1/2 top-0 bottom-0 w-0.5 -translate-x-1/2
+            className="absolute left-1/2 top-0 bottom-0 w-0.5 -translate-x-1/2 z-0
                     bg-gradient-to-b from-cyan-400/50 via-cyan-400/30 to-transparent"
           />
 
-          <motion.div className="relative flex flex-col items-center gap-16 md:gap-20">
+          <div className="relative z-10 flex flex-col items-center gap-16 md:gap-20">
             {experiences.map((exp, index) => (
               <ExperienceItem key={index} exp={exp} />
             ))}
-          </motion.div>
+          </div>
         </motion.div>
 
         <motion.div ref={messageRef}>

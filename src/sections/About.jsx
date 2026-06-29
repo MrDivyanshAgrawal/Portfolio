@@ -1,11 +1,13 @@
 import { motion, useMotionValue, useInView } from "framer-motion";
 import {
-  FaCode,
   FaLaptopCode,
   FaUserGraduate,
   FaAward,
   FaDownload,
   FaQuoteLeft,
+  FaTrophy,
+  FaUniversity,
+  FaProjectDiagram,
 } from "react-icons/fa";
 import { SiLeetcode, SiCodechef, SiGithub } from "react-icons/si";
 import { useState, useRef } from "react";
@@ -33,28 +35,32 @@ const About = () => {
 
   const stats = [
     {
-      icon: <FaCode className="w-8 h-8" />,
+      icon: <SiLeetcode className="w-8 h-8 text-yellow-500" />,
+      emblem: <SiLeetcode className="w-full h-full text-yellow-500" />,
       count: "450+",
       label: "Problems Solved",
       description: "on LeetCode, CodeChef, and other platforms",
       color: "from-cyan-400 to-blue-500",
     },
     {
-      icon: <FaLaptopCode className="w-8 h-8" />,
-      count: "4+",
+      icon: <FaProjectDiagram className="w-8 h-8 text-purple-400" />,
+      emblem: <FaLaptopCode className="w-full h-full text-purple-400" />,
+      count: "9+",
       label: "Major Projects",
-      description: "including MERN stack applications",
+      description: "full-stack apps, AI pipelines, and hackathon builds",
       color: "from-purple-400 to-pink-500",
     },
     {
-      icon: <FaUserGraduate className="w-8 h-8" />,
+      icon: <FaUniversity className="w-8 h-8 text-emerald-400" />,
+      emblem: <FaUserGraduate className="w-full h-full text-emerald-400" />,
       count: "8.79",
       label: "CGPA",
-      description: "at IIIT Kota (Till 6th Semester)",
+      description: "at IIIT Kota",
       color: "from-green-400 to-emerald-500",
     },
     {
-      icon: <FaAward className="w-8 h-8" />,
+      icon: <FaTrophy className="w-8 h-8 text-orange-400" />,
+      emblem: <FaAward className="w-full h-full text-orange-400" />,
       count: "Top 10",
       label: "Hackathon Team",
       description: "in HacktheChain 2.0",
@@ -133,7 +139,7 @@ const About = () => {
                          from-cyan-400 to-blue-500"
               >
                 {" "}
-                Problem Solver
+                Software Developer
               </span>
             </motion.h3>
 
@@ -147,8 +153,8 @@ const About = () => {
                 <span className="text-cyan-400 font-medium">
                   Indian Institute of Information Technology Kota
                 </span>
-                , passionate about creating innovative web solutions and solving
-                complex problems through code.
+                , passionate about building full-stack products and agentic AI
+                systems that turn complex data into useful software.
               </motion.p>
 
               <motion.p
@@ -156,11 +162,12 @@ const About = () => {
                 animate={isInfoInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.7, delay: 0.2 }}
               >
-                With expertise in the{" "}
-                <span className="text-cyan-400 font-medium">MERN stack</span>{" "}
-                and a strong foundation in data structures and algorithms, I
-                strive to build applications that are both technically robust
-                and user-friendly.
+                With hands-on internship experience at{" "}
+                <span className="text-cyan-400 font-medium">YogLabs</span> and{" "}
+                <span className="text-cyan-400 font-medium">Xelron</span>, I work
+                across the{" "}
+                <span className="text-cyan-400 font-medium">MERN stack</span>,{" "}
+                Python, and LLM tooling to ship reliable, production-ready features.
               </motion.p>
 
               <motion.p
@@ -171,7 +178,7 @@ const About = () => {
                 My passion for competitive programming has helped me develop
                 strong problem-solving skills, placing me in the{" "}
                 <span className="text-cyan-400 font-medium">
-                  top 6.03% globally on LeetCode
+                  top 6.02% globally on LeetCode
                 </span>
                 .
               </motion.p>
@@ -211,8 +218,8 @@ const About = () => {
                 className="flex flex-wrap gap-4 pt-4"
               >
                 <motion.a
-                  href="/DIVYANSH_AGRAWAL_RESUME.pdf"
-                  download
+                  href="/Divyansh_Agrawal_Resume.pdf"
+                  download="Divyansh_Agrawal_Resume.pdf"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className="inline-flex items-center gap-2 px-6 py-3 
@@ -309,10 +316,13 @@ const About = () => {
                         }}
                       />
 
-                      <div
-                        className={`text-transparent bg-clip-text bg-gradient-to-r ${stat.color} mb-3`}
-                      >
-                        <div className="w-10 h-10">
+                      {/* Topic emblem */}
+                      <div className="absolute -right-3 -top-3 w-16 h-16 opacity-[0.07] group-hover:opacity-[0.12] transition-opacity duration-300 pointer-events-none">
+                        {stat.emblem}
+                      </div>
+
+                      <div className="mb-3">
+                        <div className="w-10 h-10 flex items-center justify-center rounded-lg bg-gray-900/60 border border-gray-700/50">
                           {stat.icon}
                         </div>
                       </div>

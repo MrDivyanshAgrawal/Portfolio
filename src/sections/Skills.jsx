@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { techIcons } from '../components/Icons';
 import { SiLeetcode, SiCodechef, SiGeeksforgeeks, SiCodingninjas } from 'react-icons/si';
+import { FaStar } from 'react-icons/fa';
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi2';
 
 const Skills = () => {
@@ -50,15 +51,11 @@ const Skills = () => {
       color: "from-cyan-400 to-blue-500",
       skills: [
         { name: "React.js", icon: "react" },
-        { name: "JavaScript", icon: "javascript" },
         { name: "HTML5", icon: "html" },
         { name: "CSS3", icon: "css" },
         { name: "Tailwind CSS", icon: "tailwind" },
         { name: "Bootstrap", icon: "bootstrap" },
         { name: "Material UI", icon: "mui" },
-        { name: "jQuery", icon: "jquery" },
-        { name: "Framer Motion", icon: "framer" },
-        { name: "Vite", icon: "vite" },
       ]
     },
     {
@@ -68,45 +65,47 @@ const Skills = () => {
         { name: "Node.js", icon: "node" },
         { name: "Express.js", icon: "express" },
         { name: "Flask", icon: "flask" },
-        { name: "MongoDB", icon: "mongodb" },
-        { name: "MySQL", icon: "mysql" },
+        { name: "REST APIs", icon: "api" },
         { name: "Socket.IO", icon: "socketio" },
-        { name: "Redis", icon: "redis" },
-        { name: "JWT", icon: "jwt" },
-        { name: "RESTful APIs", icon: "api" },
-        { name: "Cloudinary", icon: "cloudinary" },
-        { name: "Stripe", icon: "stripe" },
+        { name: "JWT Authentication", icon: "jwt" },
       ]
     },
     {
-      title: "Programming Languages",
+      title: "Programming & Core CS",
       color: "from-purple-400 to-pink-500",
       skills: [
-        { name: "C++", icon: "cpp" },
-        { name: "C", icon: "c" },
+        { name: "C/C++", icon: "cpp" },
         { name: "Python", icon: "python" },
         { name: "JavaScript", icon: "javascript" },
-        { name: "Java", icon: "java" },
         { name: "SQL", icon: "sql" },
-        { name: "Data Structures", icon: "dsa" },
-        { name: "Algorithms", icon: "algorithm" },
+        { name: "Java", icon: "java" },
+        { name: "DSA", icon: "dsa" },
+        { name: "Operating Systems", icon: "os" },
+        { name: "DBMS", icon: "dbms" },
+        { name: "Computer Networks", icon: "networks" },
+        { name: "OOP", icon: "oop" },
+        { name: "Distributed Systems", icon: "distributed" },
       ]
     },
     {
-      title: "Tools & Deployment",
+      title: "Databases, Cloud & Tools",
       color: "from-orange-400 to-red-500",
       skills: [
-        { name: "Git", icon: "git" },
-        { name: "GitHub", icon: "github" },
+        { name: "MongoDB", icon: "mongodb" },
+        { name: "MySQL", icon: "mysql" },
+        { name: "Redis", icon: "redis" },
         { name: "AWS", icon: "aws" },
-        { name: "LangGraph", icon: "langgraph" },
+        { name: "Docker", icon: "docker" },
+        { name: "Cloudinary", icon: "cloudinary" },
         { name: "NumPy", icon: "numpy" },
         { name: "Pandas", icon: "pandas" },
-        { name: "VS Code", icon: "vscode" },
+        { name: "LangGraph", icon: "langgraph" },
+        { name: "Git", icon: "git" },
+        { name: "GitHub", icon: "github" },
         { name: "Postman", icon: "postman" },
+        { name: "VS Code", icon: "vscode" },
         { name: "Vercel", icon: "vercel" },
         { name: "Render", icon: "render" },
-        { name: "Docker", icon: "docker" },
       ]
     },
   ];
@@ -115,8 +114,10 @@ const Skills = () => {
     {
       platform: "LeetCode",
       rating: "1845",
-      problems: "450+",
-      percentile: "Top 6.03%",
+      title: "Knight · Top 6.02%",
+      problems: "450+ solved",
+      description: "Solved 450+ algorithmic challenges with Knight badge",
+      badges: ["Dynamic Programming", "Graphs", "Data Structures"],
       gradient: "from-yellow-400 to-orange-500",
       bgGradient: "from-yellow-900/20 to-orange-900/20",
       icon: <SiLeetcode className="w-12 h-12" />,
@@ -127,8 +128,10 @@ const Skills = () => {
     {
       platform: "CodeChef",
       rating: "1556",
-      problems: "115+",
-      percentile: "2★ Coder",
+      title: "2★ Coder",
+      problems: "115+ solved",
+      description: "Completed 115+ competitive programming problems",
+      badges: ["Contests", "Algorithms", "Problem Solving"],
       gradient: "from-amber-400 to-red-600",
       bgGradient: "from-amber-900/20 to-red-900/20",
       icon: <SiCodechef className="w-12 h-12" />,
@@ -139,8 +142,10 @@ const Skills = () => {
     {
       platform: "GeeksforGeeks",
       rating: "1570",
-      problems: "200+",
-      percentile: "Institute Rank 1",
+      title: "3-star recognition",
+      problems: "200+ solved",
+      description: "Solved 200+ DSA and interview-prep problems",
+      badges: ["Algorithms", "Interview Prep", "DSA"],
       gradient: "from-green-400 to-emerald-600",
       bgGradient: "from-green-900/20 to-emerald-900/20",
       icon: <SiGeeksforgeeks className="w-12 h-12" />,
@@ -151,8 +156,10 @@ const Skills = () => {
     {
       platform: "Code360",
       rating: "2158",
-      problems: "300+",
-      percentile: "Expert Level",
+      title: "Specialist",
+      problems: "300+ solved",
+      description: "Mastered 300+ data structure challenges",
+      badges: ["DSA", "Recursion", "Graphs"],
       gradient: "from-purple-400 to-pink-600",
       bgGradient: "from-purple-900/20 to-pink-900/20",
       icon: <SiCodingninjas className="w-12 h-12" />,
@@ -459,10 +466,10 @@ const Skills = () => {
             transition={{ duration: 0.7 }}
             className="text-2xl md:text-3xl font-bold text-center mb-12 text-white"
           >
-            Competitive Programming Journey
+            Competitive Programming Profile
           </motion.h3>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
             {cpPlatforms.map((platform, index) => (
               <motion.div
                 key={index}
@@ -472,6 +479,7 @@ const Skills = () => {
                   { opacity: 0, y: 30 }
                 }
                 whileHover={{ scale: 1.05 }}
+                className="h-full"
               >
                 <motion.a
                   href={platform.link}
@@ -479,7 +487,7 @@ const Skills = () => {
                   rel="noopener noreferrer"
                   whileHover={{ y: -10 }}
                   whileTap={{ scale: 0.98 }}
-                  className="relative group block cursor-pointer"
+                  className="relative group block cursor-pointer h-full"
                   aria-label={`View profile on ${platform.platform}`}
                 >
                   {/* Pulsating background effect */}
@@ -501,7 +509,7 @@ const Skills = () => {
                   
                   <div className="relative bg-gray-800/60 backdrop-blur-sm rounded-2xl p-6
                                 border border-gray-700/50 group-hover:border-gray-600
-                                transition-all duration-300 h-full">
+                                transition-all duration-300 h-full min-h-[420px] flex flex-col">
                     {/* Animated icon with improved animation */}
                     <motion.div
                       initial={{ scale: 0, rotate: -30 }}
@@ -533,21 +541,26 @@ const Skills = () => {
                     </motion.h4>
                     
                     <div className="text-center mb-4">
-                      {/* Animated counter with staggered reveal */}
-                      <motion.p 
+                      <motion.div 
                         initial={{ opacity: 0 }}
                         animate={isCompetitiveInView ? 
                           { opacity: 1, transition: { delay: index * 0.15 + 0.3 } } : 
                           { opacity: 0 }
                         }
-                        className="text-4xl font-bold text-white mb-1"
+                        className="flex items-baseline justify-center gap-2 mb-1"
                       >
-                        <AnimatedCounter 
-                          value={platform.rating} 
-                          isVisible={isCompetitiveInView}
-                          delay={index * 0.15 + 0.3}
-                        />
-                      </motion.p>
+                        <p className="text-4xl font-bold text-white">
+                          <AnimatedCounter 
+                            value={platform.rating} 
+                            isVisible={isCompetitiveInView}
+                            delay={index * 0.15 + 0.3}
+                          />
+                        </p>
+                        <span className="px-2 py-0.5 rounded-full text-xs flex items-center bg-gray-700 text-gray-200">
+                          <FaStar className="mr-1 text-yellow-500" />
+                          {platform.title}
+                        </span>
+                      </motion.div>
                       <motion.p 
                         initial={{ opacity: 0, y: 5 }}
                         animate={isCompetitiveInView ? 
@@ -559,8 +572,19 @@ const Skills = () => {
                         Rating
                       </motion.p>
                     </div>
+
+                    <motion.p
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={isCompetitiveInView ?
+                        { opacity: 1, y: 0, transition: { delay: index * 0.15 + 0.45 } } :
+                        { opacity: 0, y: 10 }
+                      }
+                      className="text-gray-400 text-xs text-center mb-3 min-h-[2.5rem]"
+                    >
+                      {platform.description}
+                    </motion.p>
                     
-                    <div className="mb-4">
+                    <div className="mb-4 flex-grow">
                       <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
                         <motion.div
                           initial={{ width: 0 }}
@@ -576,16 +600,30 @@ const Skills = () => {
                     <motion.div 
                       initial={{ opacity: 0, y: 10 }}
                       animate={isCompetitiveInView ? 
+                        { opacity: 1, y: 0, transition: { delay: index * 0.15 + 0.55 } } : 
+                        { opacity: 0, y: 10 }
+                      }
+                      className="flex flex-wrap justify-center gap-1.5 mb-3"
+                    >
+                      {platform.badges.map((badge, badgeIndex) => (
+                        <span
+                          key={badgeIndex}
+                          className="text-xs rounded-full px-2 py-0.5 bg-gray-700/80 text-gray-300 border border-gray-600"
+                        >
+                          {badge}
+                        </span>
+                      ))}
+                    </motion.div>
+                    
+                    <motion.div 
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={isCompetitiveInView ? 
                         { opacity: 1, y: 0, transition: { delay: index * 0.15 + 0.6 } } : 
                         { opacity: 0, y: 10 }
                       }
-                      className="flex justify-between items-center text-sm"
+                      className="text-center text-sm mt-auto pt-2"
                     >
                       <span className="text-gray-300">{platform.problems}</span>
-                      <span className={`font-medium text-transparent bg-clip-text 
-                                     bg-gradient-to-r ${platform.gradient}`}>
-                        {platform.percentile}
-                      </span>
                     </motion.div>
                     
                     {/* Hover overlay with "View Profile" text */}

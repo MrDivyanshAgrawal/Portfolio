@@ -119,6 +119,11 @@ export const techIcons = {
   langgraph: <FiCode className="text-cyan-400" />,
   numpy: <SiNumpy className="text-blue-500" />,
   pandas: <SiPandas className="text-indigo-400" />,
+  os: <FiSettings className="text-gray-400" />,
+  dbms: <FiDatabase className="text-blue-400" />,
+  networks: <FiGlobe className="text-green-400" />,
+  oop: <BiCodeBlock className="text-purple-400" />,
+  distributed: <FiServer className="text-cyan-400" />,
   
   // Competitive Programming
   leetcode: <SiLeetcode className="text-yellow-500" />,
