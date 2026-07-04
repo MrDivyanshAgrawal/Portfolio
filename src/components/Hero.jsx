@@ -164,9 +164,7 @@ const Hero = () => {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.7, duration: 0.7 }}
             >
-              Computer Science student at IIIT Kota with 8.79/10 CGPA. Software developer building
-              agentic AI pipelines and full-stack products with React, Node.js, and Python.
-              LeetCode Knight in the top 6.02% globally with 450+ problems solved.
+              B.Tech in Computer Science from IIIT Kota with hands-on experience building scalable full-stack applications, AI-powered backend systems, and real-time platforms using React, Node.js, Python, and MongoDB. LeetCode Knight (Top 6.02%) with 450+ coding problems solved.
             </motion.p>
 
             <motion.div
@@ -183,7 +181,7 @@ const Hero = () => {
                        text-white rounded-lg font-semibold transition-all duration-300
                        hover:shadow-lg hover:shadow-cyan-500/25 text-sm sm:text-base cursor-pointer"
               >
-                Contact Me
+                Get in Touch
               </motion.button>
               
               <motion.a

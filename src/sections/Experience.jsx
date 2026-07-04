@@ -38,9 +38,9 @@ const ExperienceItem = ({ exp }) => {
         variants={timelineDotVariants}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
-        className="relative z-10 mb-6 bg-gray-900 p-3 rounded-full border-4 border-cyan-400 shadow-lg shadow-cyan-400/20"
+        className="relative z-10 mb-6 bg-gray-900 p-3 rounded-full border-4 border-blue-500 shadow-lg shadow-blue-500/20"
       >
-        <FiBriefcase className="text-cyan-400 text-xl" />
+        <FiBriefcase className="text-blue-400 text-xl" />
       </motion.div>
 
       <motion.div
@@ -48,7 +48,7 @@ const ExperienceItem = ({ exp }) => {
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
         whileHover={{ scale: 1.02 }}
-        className="relative w-full max-w-3xl bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 lg:p-8
+        className="relative z-10 w-full max-w-3xl bg-gray-900 rounded-xl p-6 lg:p-8
                 border border-gray-700 hover:border-cyan-400/50
                 transition-all duration-300 group text-center"
       >
@@ -66,6 +66,23 @@ const ExperienceItem = ({ exp }) => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="flex flex-col items-center"
           >
+            {exp.logo && (
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+                transition={{ delay: 0.3, duration: 0.5 }}
+                className="w-16 h-16 bg-gray-900/60 p-2.5 rounded-xl border border-gray-700 flex items-center justify-center mb-4 shadow-lg group-hover:border-cyan-400/50 transition-colors duration-300"
+              >
+                <img
+                  src={exp.logo}
+                  alt={`${exp.title} logo`}
+                  className="w-full h-full object-contain rounded-lg"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                  }}
+                />
+              </motion.div>
+            )}
             <h3 className="text-2xl font-bold text-white mb-2">{exp.title}</h3>
             <p className="text-cyan-400 font-medium text-lg mb-1">{exp.role}</p>
             <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-gray-400 text-sm">
@@ -173,12 +190,13 @@ const Experience = () => {
 
   const isSectionInView = useInView(sectionRef, { amount: 0.1 });
   const isTitleInView = useInView(titleRef, { amount: 0.5 });
-  const isTimelineInView = useInView(timelineRef, { amount: 0.3 });
+  const isTimelineInView = useInView(timelineRef, { once: true, amount: 0.05 });
   const isMessageInView = useInView(messageRef, { amount: 0.5 });
 
   const experiences = [
     {
       title: "YogLabs AI Research Foundation",
+      logo: "/Experience/Yoglabs.png",
       role: "Software Development Engineer Intern · Remote",
       date: "Mar 2026 – Present",
       location: "Remote",
@@ -195,6 +213,7 @@ const Experience = () => {
     },
     {
       title: "Xelron",
+      logo: "/Experience/Xelron.png",
       role: "Software Development Engineer Intern · Remote",
       date: "Jul 2025 – Sept 2025",
       location: "Remote",
@@ -211,6 +230,7 @@ const Experience = () => {
     },
     {
       title: "HacktheChain 2.0 – IIIT Kota",
+      logo: "/Experience/HackChain.png",
       role: "Full-Stack Developer · Team Express Emergency Engineers",
       date: "Feb 2024",
       location: "IIIT Kota",
@@ -259,9 +279,9 @@ const Experience = () => {
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={isTimelineInView ? { height: "100%", opacity: 1 } : { height: 0, opacity: 0 }}
-            transition={{ duration: 1.5 }}
-            className="absolute left-1/2 top-0 bottom-0 w-0.5 -translate-x-1/2 z-0
-                    bg-gradient-to-b from-cyan-400/50 via-cyan-400/30 to-transparent"
+            transition={{ duration: 1.0, ease: "easeOut" }}
+            className="absolute left-1/2 top-0 bottom-0 w-1 -translate-x-1/2 z-0
+                    bg-blue-600 shadow-md shadow-blue-500/20"
           />
 
           <div className="relative z-10 flex flex-col items-center gap-16 md:gap-20">
