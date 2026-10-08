@@ -162,8 +162,8 @@ const About = () => {
                 animate={isInfoInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.7, delay: 0.2 }}
               >
-                With hands-on internship experience at{" "}
-                <span className="text-cyan-400 font-medium">YogLabs</span> and{" "}
+                With hands-on experience as a{" "}
+                <span className="text-cyan-400 font-medium">Research Engineer at YogLabs</span> and engineering experience at{" "}
                 <span className="text-cyan-400 font-medium">Xelron</span>, I work
                 across the{" "}
                 <span className="text-cyan-400 font-medium">MERN stack</span>,{" "}

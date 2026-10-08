@@ -197,18 +197,39 @@ const Experience = () => {
     {
       title: "YogLabs AI Research Foundation",
       logo: "/Experience/Yoglabs.png",
-      role: "Software Development Engineer Intern · Remote",
-      date: "Mar 2026 – Present",
+      role: "Research Engineer · Remote",
+      date: "Sept 2026 – Present",
       location: "Remote",
-      summary: "Built and productionized an agentic extraction pipeline for research-lab websites into structured knowledge graphs.",
+      summary: "Engineering evaluation platforms, blind A/B testing frameworks, and secure data provenance systems for AI-driven matching and recruitment infrastructure.",
       description: [
-        "Built an agentic information extraction pipeline using Python, LangGraph, OpenAI APIs, and BeautifulSoup to convert 100+ research web pages into structured knowledge graphs.",
-        "Implemented internal-link web crawling, typed Pydantic schemas, and JSON-validated LLM outputs, improving extraction consistency across heterogeneous websites by 40%.",
-        "Integrated the pipeline into a microservices architecture using Flask, MongoDB, Docker, and REST APIs with asynchronous worker-based processing."
+        "Architected a blind A/B evaluation framework to benchmark matching algorithms, decoupling engine identities to eliminate reviewer bias and ensure fair qualitative assessments.",
+        "Implemented an end-to-end evidence versioning and snapshot pipeline to ensure historical evaluations, candidate records, and matching decisions remain immutable and traceable.",
+        "Designed multi-tenant user access control, account activation lifecycles, and profile ownership boundaries to protect verified candidate data from unintended automated overwrites.",
+        "Developed scalable backend services and campaign orchestration workflows using FastAPI, MongoDB, and AWS to support multi-opportunity evaluation at scale."
       ],
-      skills: ["Python", "LangGraph", "OpenAI APIs", "Flask", "MongoDB", "Docker", "REST APIs"],
+      skills: ["Python", "FastAPI", "MongoDB", "Microservices", "AWS (Lambda, S3)", "System Architecture", "A/B Testing", "Data Provenance", "Docker"],
       achievements: [
-        { icon: <FiTrendingUp />, text: "40% extraction consistency gain" }
+        { icon: <FiAward />, text: "Blind A/B Evaluation Framework" },
+        { icon: <FiTrendingUp />, text: "Zero-Downtime Data Invariants" }
+      ]
+    },
+    {
+      title: "YogLabs AI Research Foundation",
+      logo: "/Experience/Yoglabs.png",
+      role: "Research Engineer Intern · Remote",
+      date: "Mar 2026 – Aug 2026",
+      location: "Remote",
+      summary: "Developed agentic web extraction pipelines, semantic text filtering models, and asynchronous document parsing workflows into structured knowledge graphs.",
+      description: [
+        "Built an agentic web extraction pipeline using Python, LangGraph, and LLMs that crawled and parsed complex organizational websites into structured, queryable knowledge graphs.",
+        "Trained Sentence-BERT (SBERT) vector embedding classifiers to filter boilerplate HTML noise, reducing LLM token consumption by over 60% while eliminating hallucinations.",
+        "Engineered an asynchronous resume parsing service using MongoDB change streams, OCR, and fuzzy entity matching to convert unstructured PDFs into unified profiles.",
+        "Created an automated generate-and-critique feedback loop using LLMs to evaluate and refine educational curriculum materials against structured pedagogical standards."
+      ],
+      skills: ["Python", "LangGraph", "LLMs & APIs", "Sentence-BERT", "BeautifulSoup", "Pydantic", "MongoDB", "OCR (Tesseract)", "Docker", "AWS SAM"],
+      achievements: [
+        { icon: <FiTrendingUp />, text: "60%+ LLM Token Cost Reduction" },
+        { icon: <FiAward />, text: "Knowledge Graph Extraction" }
       ]
     },
     {
